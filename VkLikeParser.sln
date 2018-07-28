@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkLikeParser", "VkLikeParser\VkLikeParser.csproj", "{5CFD4AA4-0880-4A2E-BF22-9D620AF2B405}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkLikeParserConsole", "VkLikeParser\VkLikeParserConsole.csproj", "{5CFD4AA4-0880-4A2E-BF22-9D620AF2B405}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkLikesParserMVC", "VkLikesParserMVC\VkLikesParserMVC.csproj", "{73725D5C-CE9B-43B1-943F-660C5D6CAF74}"
 EndProject
