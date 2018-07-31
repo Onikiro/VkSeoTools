@@ -2,6 +2,7 @@
 using VkLikesParserMVC.Auth;
 using VkLikesParserMVC.Models;
 using VkNet.Enums.SafetyEnums;
+using VkNet.Model;
 
 namespace VkLikesParserMVC.Controllers
 {
@@ -10,10 +11,30 @@ namespace VkLikesParserMVC.Controllers
 
         private readonly VkSystem _vk = VkSystem.GetInstance();
         public bool IsAuthorized => _vk.Vk.IsAuthorized;
-        private string _token;
 
         public ActionResult Complete()
         {
+            return View();
+        }
+
+        public ActionResult ReceiveToken()
+        {
+            var token = Request.QueryString["access_token"];
+            var expiresIn = Request.QueryString["expires_in"];
+            var userId = Request.QueryString["user_id"];
+
+            if (!int.TryParse(expiresIn, out var expiresIni) || !long.TryParse(userId, out var userIdl))
+            {
+                return Redirect("~/Home/Parser");
+            }
+
+            _vk.Vk.Authorize(new ApiAuthParams
+            {
+                AccessToken = token,
+                TokenExpireTime = expiresIni,
+                UserId = userIdl
+            });
+
             return Redirect("~/Home/Parser");
         }
 
