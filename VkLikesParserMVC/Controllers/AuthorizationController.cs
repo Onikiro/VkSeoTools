@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web;
+using System.Web.Mvc;
 using VkLikesParserMVC.Auth;
 using VkLikesParserMVC.Models;
 using VkNet.Enums.SafetyEnums;
@@ -28,6 +30,7 @@ namespace VkLikesParserMVC.Controllers
                 return Redirect("~/Home/Parser");
             }
 
+            SetTokenCookies(token, expiresIni, userIdl);
             _vk.Vk.Authorize(new ApiAuthParams
             {
                 AccessToken = token,
@@ -36,6 +39,17 @@ namespace VkLikesParserMVC.Controllers
             });
 
             return Redirect("~/Home/Parser");
+        }
+
+        private void SetTokenCookies(string tokenValue, int expireTime, long userId)
+        {
+            var cookie = new HttpCookie("token", tokenValue)
+            {
+                ["userId"] = userId.ToString(),
+                Expires = DateTime.Now.AddSeconds(expireTime)
+            };
+
+            Response.Cookies.Add(cookie);
         }
 
         public ActionResult Start()
