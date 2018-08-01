@@ -55,7 +55,7 @@ namespace VkLikesParserMVC.Controllers
         public ActionResult Start()
         {
             var vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
-            vkAuth.SetAuthParams(_vk.GetParams());
+            vkAuth.SetAuthParams(_vk.GetParams(6634517));
             var authUri = vkAuth.CreateAuthorizeUrl(vkAuth.AuthParams.ApplicationId, vkAuth.AuthParams.Settings.ToUInt64(), Display.Page, "123456");
             return Redirect(authUri.AbsoluteUri);
         }

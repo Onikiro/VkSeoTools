@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using VkNet;
@@ -13,9 +11,12 @@ namespace VkLikesParserMVC.Models
     internal static class Parser
     {
 
-        private static IEnumerable<long> GetLikes(IVkApiCategories vk, string uri, uint index = 0)
+        private static IEnumerable<long> GetLikesSegment(IVkApiCategories vk, string uri, uint index = 0)
         {
             var ids = GetPostIds(uri);
+            if (!ids.Any())
+                return new List<long>(0);
+
             return vk.Likes.GetList(new LikesGetListParams
             {
                 Type = LikeObjectType.Post,
@@ -45,17 +46,15 @@ namespace VkLikesParserMVC.Models
             return ids;
         }
 
-        public static void SaveLikes(VkApi vk)
+        public static List<long> GetLikes(VkApi vk, string uri)
         {
-            var idsList = new List<long>();
-            Console.Write("\nВведите нужный пост: ");
-            var uri = Console.ReadLine();
+            var idsList = new List<long>(500);
             var isEnded = false;
             uint offset = 0;
             while (!isEnded)
             {
                 isEnded = true;
-                idsList.AddRange(GetLikes(vk, uri, offset));
+                idsList.AddRange(GetLikesSegment(vk, uri, offset));
                 if (idsList.Count % 1000 == 0)
                 {
                     offset += 1000;
@@ -63,16 +62,7 @@ namespace VkLikesParserMVC.Models
                 }
             }
 
-            var file = new FileStream("parsedlikes.txt", FileMode.Create);
-            using (var writer = new StreamWriter(file))
-            {
-                foreach (var idNumber in idsList)
-                {
-                    writer.WriteLine($"https://vk.com/id{idNumber}");
-                }
-            }
-
-            Console.WriteLine("Успешно!");
+            return idsList;
         }
     }
 }

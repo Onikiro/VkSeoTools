@@ -1,5 +1,4 @@
 using NLog;
-using VkLikesParserMVC.Auth;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;
@@ -19,32 +18,21 @@ namespace VkLikesParserMVC.Models
             return _instance ?? (_instance = new VkSystem(settingFilters));
         }
 
-        public VkSystem()
+        private VkSystem()
         {
         }
 
-        public VkSystem(Settings settingFilters)
+        private VkSystem(Settings settingFilters)
         {
-            if(settingFilters != null)
+            if (settingFilters != null)
                 _settingFilters = settingFilters;
         }
 
-        public void Auth(Settings settingFilters = null)
-        {
-            var auth = new AuthorizationVk(Vk.VkApiVersion);
-            auth.SetAuthParams(GetParams());
-            var result = auth.Authorize();
-            Vk.Authorize(new ApiAuthParams
-            {
-                AccessToken = result.AccessToken
-            });
-        }
-
-        public ApiAuthParams GetParams()
+        public ApiAuthParams GetParams(ulong appId)
         {
             return new ApiAuthParams
             {
-                ApplicationId = 6634517,
+                ApplicationId = appId,
                 Settings = _settingFilters
             };
         }
