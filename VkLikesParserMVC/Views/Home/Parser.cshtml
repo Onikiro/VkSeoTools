@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "VK like parser";
+}
+
+<h3 class="text-warning">Прежде чем использовать парсер, необходимо авторизоваться через ВК!</h3><br />
+<a class="btn btn-primary" href="../Authorization/Start">VK oauth</a>
+
+<h1 class="h1">Парсер лайков ВК</h1>
+
+Введите ссылку на посты вида
+<b class="text-primary">https://vk.com/wall12345_67890</b> или
+<b class="text-primary">https://vk.com/group_name?wall=-111_22222</b>
+<input id="postsLinks" class="form-control" style="margin-top: 10px; width: 25%; max-width: 500px">
+<input id="submitPost" type="submit" class="btn btn-success" href="/ParserComplete" value="Начать поиск аудитории" style="margin-top: 15px ">
+

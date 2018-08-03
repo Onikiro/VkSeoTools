@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "View";
+}
+<script>
+    var hash = window.location.hash;
+    var tokenPattern = /access_token=([aA-zZ\d]+)/g;
+    var expiresPattern = /expires_in=(\d+)/g;
+    var userPattern = /user_id=(\d+)/g;
+    var token, expires, userId;
+
+    token = GetMatch(hash, tokenPattern);
+    expires = GetMatch(hash, expiresPattern);
+    userId = GetMatch(hash, userPattern);
+    window.location = "ReceiveToken?access_token=" + token + "&expires_in=" + expires + "&user_id=" + userId;
+
+    function GetMatch(hash, pattern) {
+        var match;
+        while ((match = pattern.exec(hash))) {
+            if (match[1] != null) {
+                return match[1];
+            }
+        }
+        return null;
+    }
+</script>

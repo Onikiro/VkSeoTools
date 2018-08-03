@@ -44,7 +44,7 @@ namespace VkLikeParser
             {
                 Vk.Authorize(new ApiAuthParams
                 {
-                    ApplicationId = 1001,
+                    ApplicationId = 6634517,
                     Login = _login,
                     Password = _password,
                     Settings = customSettings ?? _settingFilters
