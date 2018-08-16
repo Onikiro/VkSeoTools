@@ -5,7 +5,7 @@ using VkNet.Enums.Filters;
 using VkNet.Exception;
 using VkNet.Model;
 
-namespace VkLikeParser
+namespace VkInstruments.ConsoleApp
 {
     internal class VkSystem
     {
