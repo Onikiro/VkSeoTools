@@ -1,33 +1,13 @@
 using System;
-using NLog;
-using VkNet;
-using VkNet.Enums.Filters;
 using VkNet.Exception;
 using VkNet.Model;
 
 namespace VkInstruments.ConsoleApp
 {
-    internal class VkSystem
+    internal class VkSystem : Core.VkSystem.VkSystem
     {
-        public readonly VkApi Vk = new VkApi(LogManager.CreateNullLogger());
-
         private string _login;
-
         private string _password;
-
-        private readonly Settings _settingFilters = Settings.Groups;
-
-        public VkSystem()
-        {
-            SetCredentials();
-            Auth();
-        }
-
-        public VkSystem(Settings settingFilters)
-        {
-            SetCredentials();
-            Auth(settingFilters);
-        }
 
         private void SetCredentials()
         {
@@ -37,8 +17,9 @@ namespace VkInstruments.ConsoleApp
             _password = Console.ReadLine();
         }
 
-        private void Auth(Settings customSettings = null)
+        public override void Auth()
         {
+            SetCredentials();
             bool isLoggedIn;
             try
             {
@@ -47,7 +28,7 @@ namespace VkInstruments.ConsoleApp
                     ApplicationId = 6634517,
                     Login = _login,
                     Password = _password,
-                    Settings = customSettings ?? _settingFilters
+                    Settings = SettingFilters
                 });
                 isLoggedIn = Vk.IsAuthorized;
             }

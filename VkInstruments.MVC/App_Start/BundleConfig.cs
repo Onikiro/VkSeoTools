@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace VkLikesParserMVC
+namespace VkInstruments.MVC
 {
     public class BundleConfig
     {

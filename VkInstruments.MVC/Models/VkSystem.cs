@@ -1,40 +1,17 @@
-using NLog;
-using VkNet;
-using VkNet.Enums.Filters;
-using VkNet.Model;
+﻿using VkNet.Model;
 
-namespace VkLikesParserMVC.Models
+namespace VkInstruments.MVC.Models
 {
-    internal class VkSystem
+    public class VkSystem : Core.VkSystem.VkSystem
     {
-        public readonly VkApi Vk = new VkApi(LogManager.CreateNullLogger());
-
-        private readonly Settings _settingFilters = Settings.Groups;
-
-        private static VkSystem _instance;
-
-        public static VkSystem GetInstance(Settings settingFilters = null)
+        public override void Auth(string token, int expireTime, long userId)
         {
-            return _instance ?? (_instance = new VkSystem(settingFilters));
-        }
-
-        private VkSystem()
-        {
-        }
-
-        private VkSystem(Settings settingFilters)
-        {
-            if (settingFilters != null)
-                _settingFilters = settingFilters;
-        }
-
-        public ApiAuthParams GetParams(ulong appId)
-        {
-            return new ApiAuthParams
+            Vk.Authorize(new ApiAuthParams
             {
-                ApplicationId = appId,
-                Settings = _settingFilters
-            };
+                AccessToken = token,
+                TokenExpireTime = expireTime,
+                UserId = userId
+            });
         }
     }
 }
