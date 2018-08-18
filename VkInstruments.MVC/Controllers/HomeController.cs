@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
-using VkSystem = VkInstruments.MVC.Models.VkSystem;
+using VkInstruments.MVC.Models;
 
 namespace VkInstruments.MVC.Controllers
 {
     public class HomeController : Controller
     {
 
-        private readonly VkSystem _vk = Core.VkSystem.VkSystem.GetInstance() as VkSystem;
+        private readonly VkSystem _vk = new VkSystem();
 
         public ActionResult Parser()
         {
-            ReauthorizeVkSystem();
             return View();
         }
 
@@ -33,9 +32,12 @@ namespace VkInstruments.MVC.Controllers
             return Request.Cookies["token"];
         }
 
-        public ActionResult ParserResult()
+        [HttpPost]
+        public ActionResult ParserResult(string postLink)
         {
             ReauthorizeVkSystem();
+            var likeIds = Core.Parser.GetLikes(_vk.Vk, postLink);
+            @ViewBag.LikeIds = likeIds;
             return View();
         }
     }

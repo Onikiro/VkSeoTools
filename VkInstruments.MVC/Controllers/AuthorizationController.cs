@@ -2,15 +2,15 @@
 using System.Web;
 using System.Web.Mvc;
 using VkInstruments.MVC.Auth;
+using VkInstruments.MVC.Models;
 using VkNet.Enums.SafetyEnums;
-using VkSystem = VkInstruments.MVC.Models.VkSystem;
 
 namespace VkInstruments.MVC.Controllers
 {
     public class AuthorizationController : Controller
     {
 
-        private readonly VkSystem _vk = Core.VkSystem.VkSystem.GetInstance() as VkSystem;
+        private readonly VkSystem _vk = new VkSystem();
         public bool IsAuthorized => _vk.Vk.IsAuthorized;
 
         public ActionResult Complete()
@@ -37,8 +37,9 @@ namespace VkInstruments.MVC.Controllers
 
         private void SetTokenCookies(string tokenValue, int expireTime, long userId)
         {
-            var cookie = new HttpCookie("token", tokenValue)
+            var cookie = new HttpCookie("token")
             {
+                ["token"] = tokenValue,
                 ["userId"] = userId.ToString(),
                 Expires = DateTime.Now.AddSeconds(expireTime)
             };
