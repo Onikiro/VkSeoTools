@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
+using System.Web;
 using VkNet.Abstractions;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
@@ -35,7 +36,7 @@ namespace VkInstruments.MVC.Auth
             var builder = new StringBuilder("https://oauth.vk.com/authorize?");
 
             builder.Append($"client_id={clientId}&");
-            builder.Append($"redirect_uri={needDomain}/Authorization/Complete&");
+            builder.Append($"redirect_uri={HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority)}/Authorization/Complete&");
             builder.Append($"display={display}&");
             builder.Append($"scope={scope}&");
             builder.Append("response_type=token&");

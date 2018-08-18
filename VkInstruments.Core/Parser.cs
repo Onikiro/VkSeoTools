@@ -15,7 +15,7 @@ namespace VkInstruments.Core
 		{
 			var ids = GetPostIds(uri);
 			if (!ids.Any())
-				return new List<long>(0);
+				return new List<long>(1);
 
 			return vk.Likes.GetList(new LikesGetListParams
 			{
@@ -43,19 +43,26 @@ namespace VkInstruments.Core
 				!long.TryParse(matches[1].Value, out ids[1]))
 				throw new System.FormatException("Incorrect uri.");
 
+		    if (ids[1] < 0)
+		    {
+		        var tmp = ids[0];
+		        ids[0] = ids[1];
+		        ids[1] = tmp;
+		    }
+
 			return ids;
 		}
 
 		public static List<long> GetLikes(VkApi vk, string uri)
 		{
-			var idsList = new List<long>(500);
+			var idsList = new List<long>(100);
 			var isEnded = false;
 			uint offset = 0;
 			while (!isEnded)
 			{
 				isEnded = true;
 				idsList.AddRange(GetLikesSegment(vk, uri, offset));
-				if (idsList.Count % 1000 == 0)
+				if (idsList.Count > 0 && idsList.Count % 1000 == 0)
 				{
 					offset += 1000;
 					isEnded = false;

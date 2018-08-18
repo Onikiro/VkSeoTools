@@ -8,6 +8,7 @@ namespace VkInstruments.ConsoleApp
 		private static void Main()
 		{
 			var vkSystem = new VkSystem();
+            vkSystem.Auth();
 			Console.Write("\nВведите ссылку на пост: ");
 			try
 			{

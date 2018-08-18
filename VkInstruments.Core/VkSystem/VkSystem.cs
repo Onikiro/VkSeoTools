@@ -12,18 +12,7 @@ namespace VkInstruments.Core.VkSystem
 
         public readonly Settings SettingFilters = Settings.Groups;
 
-        private static VkSystem _instance;
-
-        public static VkSystem GetInstance(Settings settingFilters = null)
-        {
-            return _instance ?? (_instance = new VkSystem(settingFilters));
-        }
-
-        protected VkSystem()
-        {
-        }
-
-        protected VkSystem(Settings settingFilters)
+        public VkSystem(Settings settingFilters = null)
         {
             if (settingFilters != null)
                 SettingFilters = settingFilters;

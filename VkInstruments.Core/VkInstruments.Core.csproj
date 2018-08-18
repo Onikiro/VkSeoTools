@@ -80,7 +80,6 @@
   <ItemGroup>
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VkSystem\Auth\AuthorizationVk.cs" />
     <Compile Include="VkSystem\VkSystem.cs" />
   </ItemGroup>
   <ItemGroup>
