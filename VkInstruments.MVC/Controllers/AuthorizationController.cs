@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
-using VkLikesParserMVC.Auth;
-using VkLikesParserMVC.Models;
+using VkInstruments.MVC.Auth;
 using VkNet.Enums.SafetyEnums;
-using VkNet.Model;
+using VkSystem = VkInstruments.MVC.Models.VkSystem;
 
-namespace VkLikesParserMVC.Controllers
+namespace VkInstruments.MVC.Controllers
 {
     public class AuthorizationController : Controller
     {
 
-        private readonly VkSystem _vk = VkSystem.GetInstance();
+        private readonly VkSystem _vk = Core.VkSystem.VkSystem.GetInstance() as VkSystem;
         public bool IsAuthorized => _vk.Vk.IsAuthorized;
 
         public ActionResult Complete()
@@ -31,12 +30,7 @@ namespace VkLikesParserMVC.Controllers
             }
 
             SetTokenCookies(token, expiresIni, userIdl);
-            _vk.Vk.Authorize(new ApiAuthParams
-            {
-                AccessToken = token,
-                TokenExpireTime = expiresIni,
-                UserId = userIdl
-            });
+            _vk.Auth(token, expiresIni, userIdl);
 
             return Redirect("~/Home/Parser");
         }

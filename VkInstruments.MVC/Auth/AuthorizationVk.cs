@@ -7,7 +7,7 @@ using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
 using VkNet.Utils;
 
-namespace VkLikesParserMVC.Auth
+namespace VkInstruments.MVC.Auth
 {
     public class AuthorizationVk : IBrowser
     {

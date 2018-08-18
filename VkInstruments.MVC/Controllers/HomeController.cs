@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Web;
 using System.Web.Mvc;
-using VkLikesParserMVC.Models;
-using VkNet.Model;
+using VkSystem = VkInstruments.MVC.Models.VkSystem;
 
-namespace VkLikesParserMVC.Controllers
+namespace VkInstruments.MVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly VkSystem _vk = VkSystem.GetInstance();
+
+        private readonly VkSystem _vk = Core.VkSystem.VkSystem.GetInstance() as VkSystem;
 
         public ActionResult Parser()
         {
@@ -21,16 +21,11 @@ namespace VkLikesParserMVC.Controllers
             var token = ReadTokenCookies();
 
             if (token == null) return;
+
             if (!long.TryParse(token["userId"], out var userId)) return;
 
             var expireTime = (int)token.Expires.Subtract(DateTime.Now).TotalSeconds;
-
-            _vk.Vk.Authorize(new ApiAuthParams
-            {
-                AccessToken = token["token"],
-                TokenExpireTime = expireTime,
-                UserId = userId
-            });
+            _vk.Auth(token["token"], expireTime, userId);
         }
 
         private HttpCookie ReadTokenCookies()
