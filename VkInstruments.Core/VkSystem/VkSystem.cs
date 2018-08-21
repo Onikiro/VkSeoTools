@@ -3,14 +3,15 @@ using NLog;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;
+using System.Web;
 
 namespace VkInstruments.Core.VkSystem
 {
-    public class VkSystem
+    public abstract class VkSystem
     {
-        public readonly VkApi Vk = new VkApi(LogManager.CreateNullLogger());
+		public VkApi Vk { get; } = new VkApi(LogManager.CreateNullLogger());
 
-        public readonly Settings SettingFilters = Settings.Groups;
+        public Settings SettingFilters { get; } = Settings.Groups;
 
         public VkSystem(Settings settingFilters = null)
         {
@@ -36,5 +37,10 @@ namespace VkInstruments.Core.VkSystem
         {
             throw new NotImplementedException();
         }
-    }
+
+		public virtual void Auth(HttpCookie cookies)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
