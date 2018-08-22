@@ -13,18 +13,9 @@
 ```
         public Uri CreateAuthorizeUrl(ulong clientId, ulong scope, Display display, string state)
         {
-            var builder = new StringBuilder("https://oauth.vk.com/authorize?");
-
-            builder.Append($"client_id={clientId}&");
+        ...some code
             builder.Append($"redirect_uri={Сюда необходимо вставить свой домен!!!}/Authorization/Complete&");
-            builder.Append($"display={display}&");
-            builder.Append($"scope={scope}&");
-            builder.Append("response_type=token&");
-            builder.Append($"v={_versionManager.Version}&");
-            builder.Append($"state={state}&");
-            builder.Append("revoke=1");
-
-            return new Uri(builder.ToString());
+        ...some code
         }
 ```
 
@@ -34,10 +25,9 @@
 ```
         public ActionResult Start()
         {
-            var vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
-            vkAuth.SetAuthParams(_vk.GetParams(Enter your appId there));
-            var authUri = vkAuth.CreateAuthorizeUrl(vkAuth.AuthParams.ApplicationId, vkAuth.AuthParams.Settings.ToUInt64(), Display.Page, "123456");
-            return Redirect(authUri.AbsoluteUri);
+            ...some code
+            vkAuth.SetAuthParams(_vk.GetParams(Вставить appId здесь));
+            ...some code
         }
 ```
 
