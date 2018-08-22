@@ -5,7 +5,7 @@ Gets VK profiles links of people who liked your post.
 (Version 1.0)
 
 Presentation:
-![presentation gif](https://giphy.com/gifs/2kVnesYPphyGOOsXRF)
+![presentation gif](https://giphy.com/embed/2kVnesYPphyGOOsXRF)
 
 
 ### Profile links filter by input Ids 
