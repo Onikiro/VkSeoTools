@@ -36,11 +36,11 @@ namespace VkInstruments.Core
 		private static long[] GetPostIds(string uri)
 		{
 			var ids = new long[2];
-			const string idsPattern = "[-\\d]+";
+			const string idsPattern = "([-\\d]+)_([\\d]+)";
 			var idsReg = new Regex(idsPattern);
-			var matches = idsReg.Matches(uri);
-			if (!long.TryParse(matches[0].Value, out ids[0]) ||
-				!long.TryParse(matches[1].Value, out ids[1]))
+			var groups = idsReg.Match(uri).Groups;
+			if (!long.TryParse(groups[1].Value, out ids[0]) ||
+				!long.TryParse(groups[2].Value, out ids[1]))
 				throw new System.FormatException("Incorrect uri.");
 
 		    if (ids[1] < 0)
@@ -61,7 +61,8 @@ namespace VkInstruments.Core
 			while (!isEnded)
 			{
 				isEnded = true;
-				idsList.AddRange(GetLikesSegment(vk, uri, offset));
+			    var a = GetLikesSegment(vk, uri, offset);
+			    idsList.AddRange(a);
 				if (idsList.Count > 0 && idsList.Count % 1000 == 0)
 				{
 					offset += 1000;

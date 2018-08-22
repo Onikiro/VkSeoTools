@@ -51,7 +51,7 @@ namespace VkInstruments.MVC.Controllers
 		public ActionResult Start()
 		{
 			var vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
-			vkAuth.SetAuthParams(_vk.GetParams(0000000)); //Enter your appId there
+			vkAuth.SetAuthParams(_vk.GetParams(6634517)); //Enter your appId there
 			var authUri = vkAuth.CreateAuthorizeUrl(vkAuth.AuthParams.ApplicationId, vkAuth.AuthParams.Settings.ToUInt64(), Display.Page, "123456");
 			return Redirect(authUri.AbsoluteUri);
 		}

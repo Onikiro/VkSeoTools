@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using System.Web;
 using VkNet.Abstractions;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
@@ -31,7 +30,7 @@ namespace VkInstruments.MVC.Auth
             var builder = new StringBuilder("https://oauth.vk.com/authorize?");
 
             builder.Append($"client_id={clientId}&");
-            builder.Append($"redirect_uri={HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority)}/Authorization/Complete&");
+            builder.Append($"redirect_uri=http://3613861f.ngrok.io/Authorization/Complete&");
             builder.Append($"display={display}&");
             builder.Append($"scope={scope}&");
             builder.Append("response_type=token&");

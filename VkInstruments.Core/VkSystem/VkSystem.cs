@@ -13,7 +13,7 @@ namespace VkInstruments.Core.VkSystem
 
         public Settings SettingFilters { get; } = Settings.Groups;
 
-        public VkSystem(Settings settingFilters = null)
+        protected VkSystem(Settings settingFilters = null)
         {
             if (settingFilters != null)
                 SettingFilters = settingFilters;
