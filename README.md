@@ -1,41 +1,42 @@
-# Инструменты работы с аудиторией Вконтакте.
-###  Парсер лайков с постов (Version 1.0). 
+# VK seo-instruments.
+###  vk-likes parser from wall-post (Version 1.0). 
 
-Собирает ссылки на профили ВК лайкнувших выбранный пост.
-### Фильтр пользователей по входящему набору id (Soon). 
+Parsing VK profile links, who liked the wall-post.
 
-Получает на входе список ссылок на профили ВК, фильтрует по выбранным параметрам и возвращает список отфильтрованных ссылок.
+### Profile links filter by input ids (Soon). 
 
-## Установка.
-Для разворачивания Asp.net MVC5 проекта необходимо создать собственное приложение в ВК, указать в нем свой домен, на котором будет развернут сайт. 
-В классе VkInstruments/VkInstruments.MVC/Auth/AuthorizationVk.cs необходимо прописать redirect_uri, идентичный указанному в приложении ВК:
+Gets in input VK profile links, filter them and return filtered list.
+
+## Installing.
+For deploy you must create vk app, choose OpenAPI and specify your domain in settings.
+
+In VkInstruments/VkInstruments.MVC/Auth/AuthorizationVk.cs paste your domain into redirect_uri:
 
 ```
         public Uri CreateAuthorizeUrl(ulong clientId, ulong scope, Display display, string state)
         {
         ...some code
-            builder.Append($"redirect_uri={Сюда необходимо вставить свой домен!!!}/Authorization/Complete&");
+            builder.Append($"redirect_uri={Ypur domain}/Authorization/Complete&");
         ...some code
         }
 ```
 
-В классе VkInstruments.MVC/Controllers/AuthorizationController.cs необходимо указать appId приложения:
+In VkInstruments.MVC/Controllers/AuthorizationController.cs paste your appId:
 
 
 ```
         public ActionResult Start()
         {
             ...some code
-            vkAuth.SetAuthParams(_vk.GetParams(Вставить appId здесь));
+            vkAuth.SetAuthParams(_vk.GetParams(Your appId));
             ...some code
         }
 ```
 
-## Коллаборация.
-Если вас вдруг накрыло желанием перелопатить мой код и внести вклад в развитие проекта - репозиторий всегда открыт для ваших PR!
+## Collaboration.
 
-В вкладке Projects имеются задачи для последующей реализации, можете туда заглянуть, хе.
+In Projects have some not realized features, you can take any task and create PR after improve. Repository opened for PR. :)
 
-## Использованные библиотеки:
+## Used libraries:
 
 Vkontakte API for .NET https://vknet.github.io/vk/
