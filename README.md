@@ -1,11 +1,12 @@
-# VK seo-instruments.
-###  vk-likes parser from wall-post (Version 1.0). 
+# VK SEO-instruments.
+###  VK-likes parser from wall-post (Version 1.0). 
 
 Parsing VK profile links, who liked the wall-post.
 
 ### Profile links filter by input ids (Soon). 
 
 Gets in input VK profile links, filter them and return filtered list.
+
 
 ## Installing.
 For deploy you must create vk app, choose OpenAPI and specify your domain in settings.
@@ -36,6 +37,7 @@ In VkInstruments.MVC/Controllers/AuthorizationController.cs paste your appId:
 ## Collaboration.
 
 In Projects have some not realized features, you can take any task and create PR after improve. Repository opened for PR. :)
+
 
 ## Used libraries:
 
