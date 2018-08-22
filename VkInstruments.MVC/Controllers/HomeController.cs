@@ -1,44 +1,35 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using VkInstruments.MVC.Models;
 
 namespace VkInstruments.MVC.Controllers
 {
-    public class HomeController : Controller
-    {
+	public class HomeController : Controller
+	{
+		private readonly VkSystem _vk = new VkSystem();
 
-        private readonly VkSystem _vk = new VkSystem();
+		public ActionResult Parser()
+		{
+			return View();
+		}
 
-        public ActionResult Parser()
-        {
-            return View();
-        }
+		private void ReauthorizeVkSystem()
+		{
+			var cookies = ReadTokenCookies();
+			_vk.Auth(cookies);
+		}
 
-        private void ReauthorizeVkSystem()
-        {
-            var token = ReadTokenCookies();
+		private HttpCookie ReadTokenCookies()
+		{
+			return Request.Cookies["token"];
+		}
 
-            if (token == null) return;
-
-            if (!long.TryParse(token["userId"], out var userId)) return;
-
-            var expireTime = (int)token.Expires.Subtract(DateTime.Now).TotalSeconds;
-            _vk.Auth(token["token"], expireTime, userId);
-        }
-
-        private HttpCookie ReadTokenCookies()
-        {
-            return Request.Cookies["token"];
-        }
-
-        [HttpPost]
-        public ActionResult ParserResult(string postLink)
-        {
-            ReauthorizeVkSystem();
-            var likeIds = Core.Parser.GetLikes(_vk.Vk, postLink);
-            @ViewBag.LikeIds = likeIds;
-            return View();
-        }
-    }
+		[HttpPost]
+		public ActionResult ParserResult(string postLink)
+		{
+			ReauthorizeVkSystem();
+			@ViewBag.LikeIds = Core.Parser.GetLikes(_vk.Vk, postLink);
+			return View();
+		}
+	}
 }
