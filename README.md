@@ -1,14 +1,16 @@
-# VK SEO-instruments.
-###  VK-likes parser from wall-post (Version 1.0). 
+# VK SEO-instruments
+###  VK-likes parser from wall-post 
 
-Parsing VK profile links, who liked the wall-post.
+Parsing VK profile links, who liked the wall-post. 
+(Version 1.0)
 
-### Profile links filter by input ids (Soon). 
+### Profile links filter by input ids 
 
-Gets in input VK profile links, filter them and return filtered list.
+Gets in input VK profile links, filter them and return filtered list. 
+(soon)
 
 
-## Installing.
+## Installing
 For deploy you must create vk app, choose OpenAPI and specify your domain in settings.
 
 In VkInstruments/VkInstruments.MVC/Auth/AuthorizationVk.cs paste your domain into redirect_uri:
@@ -34,11 +36,11 @@ In VkInstruments.MVC/Controllers/AuthorizationController.cs paste your appId:
         }
 ```
 
-## Collaboration.
+## Collaboration
 
 In Projects have some not realized features, you can take any task and create PR after improve. Repository opened for PR. :)
 
 
-## Used libraries:
+## Used libraries
 
 Vkontakte API for .NET https://vknet.github.io/vk/
