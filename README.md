@@ -1,46 +1,49 @@
-# VK SEO-instruments
-###  VK-likes parser from wall-post 
+# VK SEO instruments
+###  VK Likes parser from wall-post 
 
-Parsing VK profile links, who liked the wall-post. 
+Gets VK profiles links of people who liked your post. 
 (Version 1.0)
 
-### Profile links filter by input ids 
+### Profile links filter by input Ids 
 
-Gets in input VK profile links, filter them and return filtered list. 
+Gets VK profile links, filters them and returns filtered list. 
 (soon)
 
 
 ## Installing
-For deploy you must create vk app, choose OpenAPI and specify your domain in settings.
+To deploy this ASP.Net MVC5 app you must: 
+1. Сreate a VK app 
+2. Choose OpenAPI
+3. Specify your domain (where your web app will be deployed) in settings.
 
-In VkInstruments/VkInstruments.MVC/Auth/AuthorizationVk.cs paste your domain into redirect_uri:
+4. In VkInstruments.MVC.Auth.AuthorizationVk paste your domain into redirect_uri:
 
-```
+```c#
         public Uri CreateAuthorizeUrl(ulong clientId, ulong scope, Display display, string state)
         {
         ...some code
-            builder.Append($"redirect_uri={Ypur domain}/Authorization/Complete&");
+            builder.Append($"redirect_uri={Your domain}/Authorization/Complete&");
         ...some code
         }
 ```
 
-In VkInstruments.MVC/Controllers/AuthorizationController.cs paste your appId:
+5. In VkInstruments.MVC.Controllers.AuthorizationController paste your appId from VK:
 
 
-```
+```c#
         public ActionResult Start()
         {
             ...some code
-            vkAuth.SetAuthParams(_vk.GetParams(Your appId));
+            vkAuth.SetAuthParams(_vk.GetParams({Your appId}));
             ...some code
         }
 ```
 
 ## Collaboration
 
-In Projects have some not realized features, you can take any task and create PR after improve. Repository opened for PR. :)
+I haven't realized some features, so you can take any task from Projects menu and create a pull request with your improvements. You are welcome. :)
 
 
 ## Used libraries
 
-Vkontakte API for .NET https://vknet.github.io/vk/
+[Vkontakte API for .NET](https://vknet.github.io/vk/)
