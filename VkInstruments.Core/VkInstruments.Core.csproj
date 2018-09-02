@@ -83,6 +83,7 @@
     <Compile Include="Enums\Status.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceFacade.cs" />
     <Compile Include="UserFilter.cs" />
     <Compile Include="VkSystem\VkSystem.cs" />
   </ItemGroup>

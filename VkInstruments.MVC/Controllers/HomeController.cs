@@ -6,8 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using VkInstruments.Core;
 using VkInstruments.MVC.Models;
+using VkInstruments.MVC.Utils;
 using VkNet.Model.RequestParams;
-using VkNet.Model.RequestParams.Database;
 
 namespace VkInstruments.MVC.Controllers
 {
@@ -37,8 +37,8 @@ namespace VkInstruments.MVC.Controllers
 		public ActionResult ParserResult(string postLink)
 		{
 			ReauthorizeVkSystem();
-
-			var model = Core.Parser.GetLikes(_vk.Vk, postLink);
+		    //TODO: IoC container, static just for test
+            var model = ServiceFacade.ParseLikesFromPosts(_vk, postLink);
 
 			return View(model);
 		}
@@ -46,7 +46,7 @@ namespace VkInstruments.MVC.Controllers
         public ActionResult Filter(string userIds)
         {
             ReauthorizeVkSystem();
-
+            //TODO: Exclude to ServiceFacade or model if you can
             var model = !string.IsNullOrEmpty(userIds)
                 ? userIds.Replace("vk.com/id", "")
                     .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList()
@@ -55,7 +55,7 @@ namespace VkInstruments.MVC.Controllers
             ViewBag.Age = Enumerable.Range(1, 100).ToSelectList();
             ViewBag.Days = Enumerable.Range(1, 31).ToSelectList();
             ViewBag.Months = Enumerable.Range(1, 12)
-                .ToDictionary(x => x, x => DateTimeFormatInfo.CurrentInfo.GetMonthName(x))
+                .ToDictionary(x => x, x => DateTimeFormatInfo.CurrentInfo?.GetMonthName(x))
                 .ToSelectList();
             ViewBag.Countries = (_vk.Vk.IsAuthorized
                 ? _vk.Vk.Database.GetCountries().ToDictionary(x => x.Id, x => x.Title)
@@ -69,11 +69,8 @@ namespace VkInstruments.MVC.Controllers
         public ActionResult FilterResult(string userIds, UserSearchParams @params)
         {
             ReauthorizeVkSystem();
-
-            var userNames = userIds.Replace("vk.com/id", "")
-                .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            var users = _vk.Vk.Users.Get(userNames, UserFilter.GetProfileFields(@params));
-            var model = UserFilter.ApplyFilter(users, @params);
+            //TODO: IoC container, static just for test
+            var model = ServiceFacade.FilterIds(_vk, userIds, @params);
 
             return View(model);
         }
@@ -81,10 +78,8 @@ namespace VkInstruments.MVC.Controllers
         public ActionResult CityPartial(int countryId)
         {
             ReauthorizeVkSystem();
-
-            var model = _vk.Vk.Database
-                .GetCities(new GetCitiesParams { CountryId = countryId })
-                .ToDictionary(x => x.Id, x => x.Title);
+            //TODO: IoC container, static just for test
+            var model = ServiceFacade.GetCities(_vk, countryId);
 
             return PartialView(model);
         }

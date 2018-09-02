@@ -3,6 +3,7 @@
     Layout = null;
 }
 
+@using VkInstruments.MVC.Utils
 @model Dictionary<long?, string>
 
 @Html.DropDownList("City", Model?.ToSelectList(), "Всё равно", new { @class = "form-control" })

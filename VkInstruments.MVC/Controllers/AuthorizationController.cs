@@ -1,5 +1,4 @@
-﻿using System;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using VkInstruments.MVC.Auth;
 using VkInstruments.MVC.Models;
@@ -10,49 +9,36 @@ namespace VkInstruments.MVC.Controllers
 	public class AuthorizationController : Controller
 	{
 		private readonly VkSystem _vk = new VkSystem();
+        private AuthorizationVk _vkAuth;
 
-		public ActionResult Complete()
+        public ActionResult Complete()
 		{
 			return View();
 		}
 
 		public ActionResult ReceiveToken()
 		{
-			var token = Request.QueryString["access_token"];
-			var expiresIn = Request.QueryString["expires_in"];
-			var userId = Request.QueryString["user_id"];
+		    var cookie = _vkAuth.GetCookieByQueryTokenString(Request.QueryString);
 
-			if (!int.TryParse(expiresIn, out var expiresIni) || !long.TryParse(userId, out var userIdl))
-			{
-				return Redirect("~/Home/Parser");
-			}
-
-			_vk.Auth(token, expiresIni, userIdl);
+            _vk.Auth(cookie);
 			if (_vk.Vk.IsAuthorized)
 			{
-				SetTokenCookies(token, expiresIni, userIdl);
+				SetTokenCookies(cookie);
 			}
 
 			return Redirect("~/Home/Parser");
 		}
 
-		private void SetTokenCookies(string tokenValue, int expireTime, long userId)
+		private void SetTokenCookies(HttpCookie cookie)
 		{
-			var cookie = new HttpCookie("token")
-			{
-				["token"] = tokenValue,
-				["userId"] = userId.ToString(),
-				Expires = DateTime.Now.AddSeconds(expireTime)
-			};
-
 			Response.Cookies.Add(cookie);
 		}
 
 		public ActionResult Start()
 		{
-			var vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
-			vkAuth.SetAuthParams(_vk.GetParams(1234567)); //Enter your appId there
-			var authUri = vkAuth.CreateAuthorizeUrl(vkAuth.AuthParams.ApplicationId, vkAuth.AuthParams.Settings.ToUInt64(), Display.Page, "123456");
+		    _vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
+		    _vkAuth.SetAuthParams(_vk.GetParams(1234567)); //Enter your appId there
+			var authUri = _vkAuth.CreateAuthorizeUrl(_vkAuth.AuthParams.ApplicationId, _vkAuth.AuthParams.Settings.ToUInt64(), Display.Page, "123456");
 			return Redirect(authUri.AbsoluteUri);
 		}
 	}

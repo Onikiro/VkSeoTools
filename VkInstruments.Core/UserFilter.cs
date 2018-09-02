@@ -20,7 +20,7 @@ namespace VkInstruments.Core
 
                 var isFullDate = user.BirthDate?.Count(char.IsPunctuation) > 1;
                 user.BirthDate = isFullDate ? user.BirthDate : user.BirthDate + ".1900";
-                DateTime.TryParse(user.BirthDate, out DateTime birthDate);
+                DateTime.TryParse(user.BirthDate, out var birthDate);
                 var age = isFullDate ? (DateTime.Now.Year - birthDate.Year) : (int?)null;
 
                 if (searchParams.Sex != Sex.Unknown) isMatch &= (user.Sex == searchParams.Sex);

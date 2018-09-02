@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Specialized;
 using System.Text;
+using System.Web;
 using VkNet.Abstractions;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
@@ -39,6 +41,25 @@ namespace VkInstruments.MVC.Auth
             builder.Append("revoke=1");
 
             return new Uri(builder.ToString());
+        }
+
+        public HttpCookie GetCookieByQueryTokenString(NameValueCollection queryString)
+        {
+            var token = queryString["access_token"];
+            var expiresIn = queryString["expires_in"];
+            var userId = queryString["user_id"];
+
+            if (!int.TryParse(expiresIn, out var expiresIni) || !long.TryParse(userId, out var userIdl))
+            {
+                return null;
+            }
+
+            return new HttpCookie("token")
+            {
+                ["token"] = token,
+                ["userId"] = userIdl.ToString(),
+                Expires = DateTime.Now.AddSeconds(expiresIni)
+            };
         }
     }
 }
