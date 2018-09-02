@@ -12,7 +12,7 @@ namespace VkInstruments.MVC
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Parser", id = UrlParameter.Optional }
             );
         }
     }

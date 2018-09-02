@@ -4,25 +4,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - VkInstruments</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     @Styles.Render("~/Content/css")
 </head>
 <body>
-        <header class="blog-masthead">
-            <nav class="navbar">
-                <div class="container">
-                    <div class="left-nav">
-                        <a class="nav-link" href="../Home/Parser">Парсер лайков</a>
-                        <a class="nav-link" href="../Home/Filter">Фильтр пользователей</a>
-                    </div>
-                    <div class="right-nav">
-                        <a class="right-title">VK Instruments</a>
-                    </div>
+    <header class="blog-masthead">
+        <nav class="navbar">
+            <div class="container">
+                <div class="left-nav">
+                    <a class="nav-link" href="../Authorization/Start">VK oauth</a>                   
+                    <a class="nav-link" href="../Home/Parser">Парсер лайков</a>
+                    <a class="nav-link" href="../Home/Filter">Фильтр пользователей</a>
                 </div>
-            </nav>
-        </header>
+                <div class="right-nav">
+                    <a class="right-title">VK Instruments</a>
+                </div>
+            </div>
+        </nav>       
+    </header>
     <div class="container body-content">
+        <h5 class="text-warning">Прежде чем продолжить, необходимо авторизоваться через ВК!</h5>
         @RenderBody()
-        <div style="padding-top: 100px"/>
+        <div style="padding-top: 100px" />
         <footer class="modal-footer">
             <p style="font-size: smaller">&copy; @DateTime.Now.Year - VkInstruments</p>
         </footer>
