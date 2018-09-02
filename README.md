@@ -2,7 +2,7 @@
 ###  VK Likes parser from wall-post 
 
 Gets VK profiles links of people who liked your post. 
-(Version 1.0)
+([Release](https://github.com/Onikiro/VkInstruments/releases/tag/1.1))
 
 Presentation:
 ![presentation gif](https://media.giphy.com/media/2kVnesYPphyGOOsXRF/giphy.gif)
