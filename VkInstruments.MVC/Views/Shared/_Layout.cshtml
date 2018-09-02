@@ -7,11 +7,24 @@
     @Styles.Render("~/Content/css")
 </head>
 <body>
+        <header class="blog-masthead">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="left-nav">
+                        <a class="nav-link" href="../Home/Parser">Парсер лайков</a>
+                        <a class="nav-link" href="../Home/Filter">Фильтр пользователей</a>
+                    </div>
+                    <div class="right-nav">
+                        <a class="right-title">VK Instruments</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - VkInstruments</p>
+        <div style="padding-top: 100px"/>
+        <footer class="modal-footer">
+            <p style="font-size: smaller">&copy; @DateTime.Now.Year - VkInstruments</p>
         </footer>
     </div>
 </body>

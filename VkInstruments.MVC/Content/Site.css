@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -21,4 +20,57 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.blog-masthead {
+    margin-bottom: 0.5rem;
+    background-color: #4a76a8;
+    -webkit-box-shadow: inset 0 -.1rem .25rem rgba(106, 106, 106, 0.1);
+    box-shadow: inset 0 -.1rem .25rem rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid #4872a3;
+    max-height: 50px;
+}
+
+.alternate-background-link {
+    color: #ffffff;
+}
+
+div.right-nav > a.right-title {
+    text-align: right;
+    font-weight: 500;
+    color: #ffffff;
+}
+
+div.right-nav > a.right-title:hover {
+    color: #ffffff;
+}
+
+/* Nav links */
+.nav-link {
+    position: relative;
+    font-weight: 500;
+    color: #ffffff;
+    padding: 0.3rem 1rem;
+}
+
+.nav-link:hover {
+    color: black;
+}
+
+div.left-nav {
+    float: left;
+    display: flex;
+}
+
+div.right-nav {
+    float: right;
+    display: inline-block;
+}
+
+div.right-nav a {
+    display: inline-block;
+}
+
+.container {
+    padding-right: -15px;
 }
