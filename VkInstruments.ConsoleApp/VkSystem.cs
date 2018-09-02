@@ -28,7 +28,12 @@ namespace VkInstruments.ConsoleApp
                     ApplicationId = 6634517,
                     Login = _login,
                     Password = _password,
-                    Settings = SettingFilters
+                    Settings = SettingFilters,
+                    TwoFactorAuthorization = () =>
+                    {
+                        Console.Write("\nВведите код:");
+                        return Console.ReadLine();
+                    }
                 });
                 isLoggedIn = Vk.IsAuthorized;
             }
