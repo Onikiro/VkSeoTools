@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkInstruments.ConsoleApp", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkInstruments.MVC", "VkInstruments.MVC\VkInstruments.MVC.csproj", "{73725D5C-CE9B-43B1-943F-660C5D6CAF74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkInstruments.Core.Tests", "VkInstruments.Core.Tests\VkInstruments.Core.Tests.csproj", "{9062231F-89CF-4422-8C68-C8F0FC22F1E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{73725D5C-CE9B-43B1-943F-660C5D6CAF74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73725D5C-CE9B-43B1-943F-660C5D6CAF74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73725D5C-CE9B-43B1-943F-660C5D6CAF74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9062231F-89CF-4422-8C68-C8F0FC22F1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9062231F-89CF-4422-8C68-C8F0FC22F1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9062231F-89CF-4422-8C68-C8F0FC22F1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9062231F-89CF-4422-8C68-C8F0FC22F1E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,9 +8,8 @@ using VkNet.Model.RequestParams;
 
 namespace VkInstruments.Core
 {
-	public static class Parser
+    internal static class Parser
 	{
-
 		private static IEnumerable<long> GetLikesSegment(IVkApiCategories vk, string uri, uint index = 0)
 		{
 			var ids = GetPostIds(uri);
@@ -29,11 +28,11 @@ namespace VkInstruments.Core
 			}).ToList();
 		}
 
-		/// <summary>
-		/// Returns post id array (0 - ownerId, 1 - ItemId)
-		/// </summary>
-		/// <param name="uri">post link</param>
-		private static long[] GetPostIds(string uri)
+        /// <summary>
+        /// Returns post id array (0 - ownerId, 1 - ItemId)
+        /// </summary>
+        /// <param name="uri">post link</param>
+        internal static long[] GetPostIds(string uri)
 		{
 			var ids = new long[2];
 			const string idsPattern = "([-\\d]+)_([\\d]+)";
@@ -53,7 +52,7 @@ namespace VkInstruments.Core
 			return ids;
 		}
 
-		public static List<long> GetLikes(VkApi vk, string uri)
+	    internal static List<long> GetLikes(VkApi vk, string uri)
 		{
 			var idsList = new List<long>(100);
 			var isEnded = false;
