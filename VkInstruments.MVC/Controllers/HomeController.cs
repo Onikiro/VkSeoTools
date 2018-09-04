@@ -11,6 +11,7 @@ using VkNet.Model.RequestParams;
 
 namespace VkInstruments.MVC.Controllers
 {
+    [Authorize]
 	public class HomeController : Controller
 	{
 		private readonly VkSystem _vk = new VkSystem();

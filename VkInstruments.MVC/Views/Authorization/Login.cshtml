@@ -1,0 +1,32 @@
+﻿@{
+    Layout = "~/Views/Shared/_AuthorizationLayout.cshtml";
+}
+
+<script>
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    function Login() {
+        var form = $('#authForm');
+        $('#returnUrl').val(getParameterByName('ReturnUrl', null));
+        form.submit();
+    }
+</script>
+
+@using (Html.BeginForm("Start", "Authorization", FormMethod.Post, new { @id = "authForm"}))
+{
+    <div class="text-center">
+        <h5 class="text-warning">Прежде чем продолжить, необходимо авторизоваться!</h5>
+        <input type="hidden" id ="returnUrl" name="returnUrl" value=""/>
+        <a class="btn btn-primary" style="width: 200px; color: white" onclick="Login()">Войти через ВК</a>
+    </div>
+}
+
+
