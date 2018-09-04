@@ -17,7 +17,7 @@
     function GetMatch(hash, pattern) {
         var match;
         while ((match = pattern.exec(hash))) {
-            if (match[1] != null) {
+            if (match[1] !== null) {
                 return match[1];
             }
         }

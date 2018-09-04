@@ -8,7 +8,7 @@ using VkNet.Model.RequestParams;
 
 namespace VkInstruments.Core
 {
-    internal static class Parser
+    public static class Parser
 	{
 		private static IEnumerable<long> GetLikesSegment(IVkApiCategories vk, string uri, uint index = 0)
 		{
@@ -52,7 +52,7 @@ namespace VkInstruments.Core
 			return ids;
 		}
 
-	    internal static List<long> GetLikes(VkApi vk, string uri)
+	    public static List<long> GetLikes(VkApi vk, string uri)
 		{
 			var idsList = new List<long>(100);
 			var isEnded = false;
