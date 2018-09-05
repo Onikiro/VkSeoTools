@@ -84,10 +84,12 @@
   <ItemGroup>
     <Compile Include="Enums\Sex.cs" />
     <Compile Include="Enums\Status.cs" />
+    <Compile Include="IVkService.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceFacade.cs" />
+    <Compile Include="VkService.cs" />
     <Compile Include="UserFilter.cs" />
+    <Compile Include="VkSystem\IVkSystem.cs" />
     <Compile Include="VkSystem\VkSystem.cs" />
   </ItemGroup>
   <ItemGroup>

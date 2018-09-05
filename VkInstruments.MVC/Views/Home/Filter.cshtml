@@ -1,9 +1,15 @@
-﻿@using VkInstruments.Core.Enums
-
-@model IEnumerable<string>
+﻿@using System.Globalization
+@using VkInstruments.Core.Enums
+@using VkInstruments.MVC.Utils
 
 @{
     ViewBag.Title = "Filter";
+
+    var ageRange = Enumerable.Range(1, 100).ToSelectList();
+    var dayRange = Enumerable.Range(1, 31).ToSelectList();
+    var monthRange = Enumerable.Range(1, 12)
+        .ToDictionary(x => x, x => DateTimeFormatInfo.CurrentInfo?.GetMonthName(x))
+        .ToSelectList();
 }
 
 <script>
@@ -22,8 +28,7 @@
 
 @using (Html.BeginForm("FilterResult", "Home", FormMethod.Post))
 {
-    @Html.TextArea("userIds", string.Join("\n", Model?.Select(x => $"vk.com/id{x}")),
-        new { @class = "form-control", @style = "width: 500px" })
+    @Html.TextArea("userIds", ViewBag.UserIds as string, new { @class = "form-control", @style = "width: 500px" })
 
     <b>Укажите те настройки, по которым вам нужно отфильтровать список пользователей (все сразу указывать необязательно):</b><br />
 
@@ -32,13 +37,13 @@
 
     <b>2. Фильтр по возрасту:</b><br />
     @Html.Label("AgeFromLabel", "От", new { @for = "AgeFrom" })
-    @Html.DropDownList("AgeFrom", ViewBag.Age as SelectList, "Всё равно", new { @class = "form-control" })
+    @Html.DropDownList("AgeFrom", ageRange, "Всё равно", new { @class = "form-control" })
     @Html.Label("AgeToLabel", "до", new { @for = "AgeToLabel" })
-    @Html.DropDownList("AgeTo", ViewBag.Age as SelectList, "Всё равно", new { @class = "form-control" })
+    @Html.DropDownList("AgeTo", ageRange, "Всё равно", new { @class = "form-control" })
 
     <b>3. Фильтр по дню рождения:</b><br />
-    @Html.DropDownList("BirthDay", ViewBag.Days as SelectList, "Всё равно", new { @class = "form-control" })
-    @Html.DropDownList("BirthMonth", ViewBag.Months as SelectList, "Всё равно", new { @class = "form-control" })
+    @Html.DropDownList("BirthDay", dayRange, "Всё равно", new { @class = "form-control" })
+    @Html.DropDownList("BirthMonth", monthRange, "Всё равно", new { @class = "form-control" })
 
     <b>4. Гео-фильтр (по стране, области или городу):</b><br />
     @Html.DropDownList("Country", ViewBag.Countries as SelectList, "Всё равно", new { @class = "form-control", @onchange = "UpdateCities(this.value)" })   

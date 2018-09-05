@@ -1,8 +1,8 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using VkInstruments.Core.VkSystem;
 using VkInstruments.MVC.Auth;
-using VkInstruments.MVC.Models;
 using VkNet.Enums.SafetyEnums;
 
 namespace VkInstruments.MVC.Controllers
@@ -10,13 +10,13 @@ namespace VkInstruments.MVC.Controllers
     [AllowAnonymous]
     public class AuthorizationController : Controller
     {
-        private readonly VkSystem _vk;
+        private readonly IVkSystem _vk;
         private readonly AuthorizationVk _vkAuth;
         private static string _returnUrl;
 
-        public AuthorizationController()
+        public AuthorizationController(IVkSystem vk)
         {
-            _vk = new VkSystem();
+            _vk = vk;
             _vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
             _vkAuth.SetAuthParams(_vk.GetParams(6447383));
         }
