@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Web;
+﻿using System.Web;
 using System.Web.Mvc;
 using VkInstruments.Core;
-using VkInstruments.MVC.Models;
+using VkInstruments.Core.VkSystem;
 using VkInstruments.MVC.Utils;
 using VkNet.Model.RequestParams;
 
@@ -14,12 +10,17 @@ namespace VkInstruments.MVC.Controllers
     [Authorize]
 	public class HomeController : Controller
 	{
-		private readonly VkSystem _vk = new VkSystem();
+	    private readonly IVkService _vkService;
+
+	    public HomeController(IVkSystem vk, IVkService vkService)
+	    {
+	        _vkService = vkService;
+	    }
 
 		private void ReauthorizeVkSystem()
 		{
 			var cookies = ReadTokenCookies();
-			_vk.Auth(cookies);
+		    _vkService.Auth(cookies);
 		}
 
 		private HttpCookie ReadTokenCookies()
@@ -38,8 +39,8 @@ namespace VkInstruments.MVC.Controllers
 		public ActionResult ParserResult(string postLink)
 		{
 			ReauthorizeVkSystem();
-		    //TODO: IoC container, static just for test
-            var model = ServiceFacade.ParseLikesFromPosts(_vk, postLink);
+
+            var model = _vkService.ParseLikesFromPost(postLink);
 
 			return View(model);
 		}
@@ -47,31 +48,19 @@ namespace VkInstruments.MVC.Controllers
         public ActionResult Filter(string userIds)
         {
             ReauthorizeVkSystem();
-            //TODO: Exclude to ServiceFacade or model if you can
-            var model = !string.IsNullOrEmpty(userIds)
-                ? userIds.Replace("vk.com/id", "")
-                    .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList()
-                : new List<string>();
 
-            ViewBag.Age = Enumerable.Range(1, 100).ToSelectList();
-            ViewBag.Days = Enumerable.Range(1, 31).ToSelectList();
-            ViewBag.Months = Enumerable.Range(1, 12)
-                .ToDictionary(x => x, x => DateTimeFormatInfo.CurrentInfo?.GetMonthName(x))
-                .ToSelectList();
-            ViewBag.Countries = (_vk.Vk.IsAuthorized
-                ? _vk.Vk.Database.GetCountries().ToDictionary(x => x.Id, x => x.Title)
-                : new Dictionary<long?, string>())
-                .ToSelectList();
+            ViewBag.UserIds = userIds;
+            ViewBag.Countries = _vkService.GetCountries().ToSelectList();
 
-            return View(model);
+            return View();
         }
 
         [HttpPost]
         public ActionResult FilterResult(string userIds, UserSearchParams @params)
         {
             ReauthorizeVkSystem();
-            //TODO: IoC container, static just for test
-            var model = ServiceFacade.FilterIds(_vk, userIds, @params);
+
+            var model = _vkService.FilterIds(userIds, @params);
 
             return View(model);
         }
@@ -79,8 +68,8 @@ namespace VkInstruments.MVC.Controllers
         public ActionResult CityPartial(int countryId)
         {
             ReauthorizeVkSystem();
-            //TODO: IoC container, static just for test
-            var model = ServiceFacade.GetCities(_vk, countryId);
+
+            var model = _vkService.GetCities(countryId);
 
             return PartialView(model);
         }

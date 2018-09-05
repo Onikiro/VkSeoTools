@@ -1,17 +1,19 @@
-using System;
+﻿using System;
+using System.Web;
 using NLog;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;
-using System.Web;
 
 namespace VkInstruments.Core.VkSystem
 {
-    public abstract class VkSystem
+    public class VkSystem : IVkSystem
     {
-		public VkApi Vk { get; } = new VkApi(LogManager.CreateNullLogger());
+        public VkApi Vk { get; } = new VkApi(LogManager.CreateNullLogger());
 
         public Settings SettingFilters { get; } = Settings.Groups;
+
+        public VkSystem() { }
 
         protected VkSystem(Settings settingFilters = null)
         {
@@ -28,19 +30,31 @@ namespace VkInstruments.Core.VkSystem
             };
         }
 
-        public virtual void Auth()
+        public void Auth()
         {
             throw new NotImplementedException();
         }
 
-        public virtual void Auth(string token, int expireTime, long userId)
+        public void Auth(string token, int expireTime, long userId)
         {
-            throw new NotImplementedException();
+            Vk.Authorize(new ApiAuthParams
+            {
+                AccessToken = token,
+                TokenExpireTime = expireTime,
+                UserId = userId
+            });
         }
 
-		public virtual void Auth(HttpCookie cookies)
-		{
-			throw new NotImplementedException();
-		}
-	}
+        public void Auth(HttpCookie cookies)
+        {
+            if (cookies == null)
+                return;
+
+            if (!long.TryParse(cookies["userId"], out var userId))
+                return;
+
+            var expireTime = (int)cookies.Expires.Subtract(DateTime.Now).TotalSeconds;
+            Auth(cookies["token"], expireTime, userId);
+        }
+    }
 }
