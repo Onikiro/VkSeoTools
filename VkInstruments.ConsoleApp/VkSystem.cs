@@ -17,7 +17,7 @@ namespace VkInstruments.ConsoleApp
             _password = Console.ReadLine();
         }
 
-        public override void Auth()
+        public new void Auth()
         {
             SetCredentials();
             bool isLoggedIn;

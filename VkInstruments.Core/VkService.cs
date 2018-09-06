@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using VkInstruments.Core.VkSystem;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
@@ -16,11 +15,6 @@ namespace VkInstruments.Core
         public VkService(IVkSystem vk)
         {
             _vk = vk;
-        }
-
-        public void Auth(HttpCookie cookies)
-        {
-            _vk.Auth(cookies);
         }
 
         public IEnumerable<long> ParseLikesFromPost(string postLink)

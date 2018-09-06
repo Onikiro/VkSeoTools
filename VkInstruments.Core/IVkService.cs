@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Web;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
 
@@ -7,8 +6,6 @@ namespace VkInstruments.Core
 {
     public interface IVkService
     {
-        void Auth(HttpCookie cookies);
-
         IEnumerable<long> ParseLikesFromPost(string postLink);
 
         IEnumerable<long> ParseLikesFromPosts(ICollection<string> postLinkColletion);
