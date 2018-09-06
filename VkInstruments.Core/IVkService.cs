@@ -6,9 +6,7 @@ namespace VkInstruments.Core
 {
     public interface IVkService
     {
-        IEnumerable<long> ParseLikesFromPost(string postLink);
-
-        IEnumerable<long> ParseLikesFromPosts(ICollection<string> postLinkColletion);
+        IEnumerable<long> ParseLikesFromPost(string input);
 
         IEnumerable<User> FilterIds(string userIds, UserSearchParams @params);
 

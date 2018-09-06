@@ -17,24 +17,23 @@ namespace VkInstruments.Core
             _vk = vk;
         }
 
-        public IEnumerable<long> ParseLikesFromPost(string postLink)
-        {
-            return Parser.GetLikes(_vk.Vk, postLink);
-        }
+		public IEnumerable<long> ParseLikesFromPost(string input)
+		{
+			var postLinks = input.Split('\n');
+			var likeIds = new List<long>();
 
-        public IEnumerable<long> ParseLikesFromPosts(ICollection<string> postLinkColletion)
-        {
-            var postLinks = postLinkColletion.ToList();
-            var likeIds = Parser.GetLikes(_vk.Vk, postLinks[0]);
-            for (var i = 1; i < postLinks.Count; i++)
-            {
-                likeIds.AddRange(Parser.GetLikes(_vk.Vk, postLinks[i]));
-            }
+			if (postLinks.Count() > 0)
+			{
+				foreach (var link in postLinks)
+				{
+					likeIds.AddRange(Parser.GetLikes(_vk.Vk, link));
+				}
+			}
 
-            return likeIds;
-        }
+			return likeIds;
+		}
 
-        public IEnumerable<User> FilterIds(string userIds, UserSearchParams @params)
+		public IEnumerable<User> FilterIds(string userIds, UserSearchParams @params)
         {
             var userNames = userIds.Replace("vk.com/id", "")
                 .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
