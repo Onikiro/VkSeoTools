@@ -10,7 +10,7 @@ namespace VkInstruments.Core
 {
     public class VkService : IVkService
     {
-        private IVkSystem _vk;
+        private readonly IVkSystem _vk;
 
         public VkService(IVkSystem vk)
         {
