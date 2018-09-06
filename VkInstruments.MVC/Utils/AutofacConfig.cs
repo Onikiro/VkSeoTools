@@ -14,7 +14,7 @@ namespace VkInstruments.MVC.Utils
 
             builder.RegisterControllers(typeof(MvcApplication).Assembly);
 
-            builder.RegisterType<VkSystem>().As<IVkSystem>();
+            builder.RegisterType<VkSystem>().As<IVkSystem>().SingleInstance();
             builder.RegisterType<VkService>().As<IVkService>();
 
             var container = builder.Build();

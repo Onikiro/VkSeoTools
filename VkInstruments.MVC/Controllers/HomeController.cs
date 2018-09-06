@@ -10,17 +10,19 @@ namespace VkInstruments.MVC.Controllers
     [Authorize]
 	public class HomeController : Controller
 	{
-	    private readonly IVkService _vkService;
+	    private readonly IVkSystem _vk;
+        private readonly IVkService _vkService;	    
 
 	    public HomeController(IVkSystem vk, IVkService vkService)
 	    {
+	        _vk = vk;
 	        _vkService = vkService;
 	    }
 
 		private void ReauthorizeVkSystem()
 		{
 			var cookies = ReadTokenCookies();
-		    _vkService.Auth(cookies);
+		    _vk.Auth(cookies);
 		}
 
 		private HttpCookie ReadTokenCookies()
@@ -30,8 +32,6 @@ namespace VkInstruments.MVC.Controllers
 
         public ActionResult Parser()
         {
-            ReauthorizeVkSystem();
-
             return View();
         }
 
