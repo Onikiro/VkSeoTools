@@ -2,7 +2,7 @@
 ###  VK Likes parser from wall-post 
 
 Gets VK profiles links of people who liked your post. 
-([Release](https://github.com/Onikiro/VkInstruments/releases/tag/1.1))
+([Release](https://github.com/Onikiro/VkInstruments/releases/tag/2.0))
 
 Presentation:
 ![presentation gif](https://media.giphy.com/media/2kVnesYPphyGOOsXRF/giphy.gif)
@@ -11,7 +11,7 @@ Presentation:
 ### Profile links filter by input Ids 
 
 Gets VK profile links, filters them and returns filtered list. 
-(soon)
+([Release](https://github.com/Onikiro/VkInstruments/releases/tag/2.0))
 
 
 ## Installing
