@@ -1,0 +1,13 @@
+﻿@using VkInstruments.CoreWebApp.Utils
+
+@model Type
+
+@foreach (var li in Enum.GetValues(Model).OfType<Enum>())
+{
+    var id = $"ChekBox_{ViewData.TemplateInfo.HtmlFieldPrefix}_{Model.FullName}_{li.ToString()}";
+
+    <div class="editor-radio">
+        @Html.CheckBox(li.ToString(), false, new { @id = id })
+        @Html.Label(id, li.GetDescription(), new { @for = id })
+    </div>
+}

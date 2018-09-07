@@ -30,11 +30,6 @@ namespace VkInstruments.Core.VkSystem
             };
         }
 
-        public void Auth()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Auth(string token, int expireTime, long userId)
         {
             Vk.Authorize(new ApiAuthParams
@@ -43,6 +38,14 @@ namespace VkInstruments.Core.VkSystem
                 TokenExpireTime = expireTime,
                 UserId = userId
             });
+        }
+
+        public void Auth(string token, string expireTime, string userId)
+        {
+            if (!long.TryParse(userId, out var userIdResult) || !int.TryParse(expireTime, out var expireTimeResult))
+                return;
+
+            Auth(token, expireTimeResult, userIdResult);
         }
 
         public void Auth(HttpCookie cookies)

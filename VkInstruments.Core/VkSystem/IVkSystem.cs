@@ -13,9 +13,9 @@ namespace VkInstruments.Core.VkSystem
 
         ApiAuthParams GetParams(ulong appId);
 
-        void Auth();
-
         void Auth(string token, int expireTime, long userId);
+
+        void Auth(string token, string expireTime, string userId);
 
         void Auth(HttpCookie cookies);
     }

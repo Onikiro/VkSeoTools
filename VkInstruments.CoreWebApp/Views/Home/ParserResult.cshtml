@@ -1,0 +1,17 @@
+﻿@model IEnumerable<long>
+
+@{
+    ViewBag.Title = "Parser result";
+}
+
+<h3 class="text-center">Результат парсинга лайков с поста: </h3>
+
+@using (Html.BeginForm("Filter", "Home", FormMethod.Post))
+{
+    @Html.TextArea("userIds",
+        string.Join("\n", Model?.Select(x => $"vk.com/id{x}")),
+        new { @class = "form-control", @style = "width: 500px; margin-top:10px" })
+    
+    <input id="submitPost" type="submit" class="btn btn-success" value="Отфильтровать пользователей" style="margin-top: 15px ">
+}
+
