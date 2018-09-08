@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="NLog" Version="4.5.9" />
-    <PackageReference Include="VkNet" Version="1.37.0" />
+    <PackageReference Include="VkNet" Version="1.37.1" />
   </ItemGroup>
 
 </Project>

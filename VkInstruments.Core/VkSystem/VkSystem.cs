@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging.Abstractions;
 using NLog;
 using VkNet;
 using VkNet.Enums.Filters;
@@ -8,7 +9,7 @@ namespace VkInstruments.Core.VkSystem
 {
     public class VkSystem : IVkSystem
     {
-        public VkApi Vk { get; } = new VkApi(LogManager.CreateNullLogger());
+        public VkApi Vk { get; } = new VkApi(NullLogger<VkApi>.Instance);
 
         public Settings SettingFilters { get; } = Settings.Groups;
 
