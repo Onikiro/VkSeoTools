@@ -1,7 +1,6 @@
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;
-using System.Web;
 
 namespace VkInstruments.Core.VkSystem
 {
@@ -16,7 +15,5 @@ namespace VkInstruments.Core.VkSystem
         void Auth(string token, int expireTime, long userId);
 
         void Auth(string token, string expireTime, string userId);
-
-        void Auth(HttpCookie cookies);
     }
 }

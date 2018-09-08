@@ -1,5 +1,6 @@
-п»їusing NUnit.Framework;
-using VkInstruments.MVC.Utils;
+using NUnit.Framework;
+using VkInstruments.Core.Enums;
+using VkInstruments.Core.Utils;
 
 namespace VkInstruments.Core.Tests
 {
@@ -9,12 +10,12 @@ namespace VkInstruments.Core.Tests
         [Test]
         public void GetDescription()
         {
-            var expectedDescription = "Р’ Р°РєС‚РёРІРЅРѕРј РїРѕРёСЃРєРµ";
-            var badDescription1 = "Р’ Р°РєС‚РёРІРЅРѕРј";
-            var badDescription2 = "Р’ РїРѕРёСЃРєРµ";
-            var badDescription3 = "Р°РєС‚РёРІРЅРѕРј РїРѕРёСЃРєРµ";
-            var actualDescription = Enums.Status.TheActiveSearch.GetDescription();
-            
+            var expectedDescription = "В активном поиске";
+            var badDescription1 = "В активном";
+            var badDescription2 = "В поиске";
+            var badDescription3 = "активном поиске";
+            var actualDescription = Status.TheActiveSearch.GetDescription();
+
             Assert.AreEqual(expectedDescription, actualDescription);
 
             Assert.AreNotEqual(badDescription1, actualDescription);

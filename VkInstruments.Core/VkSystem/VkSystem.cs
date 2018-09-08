@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web;
 using NLog;
 using VkNet;
 using VkNet.Enums.Filters;
@@ -30,6 +29,11 @@ namespace VkInstruments.Core.VkSystem
             };
         }
 
+        public void Auth()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Auth(string token, int expireTime, long userId)
         {
             Vk.Authorize(new ApiAuthParams
@@ -46,18 +50,6 @@ namespace VkInstruments.Core.VkSystem
                 return;
 
             Auth(token, expireTimeResult, userIdResult);
-        }
-
-        public void Auth(HttpCookie cookies)
-        {
-            if (cookies == null)
-                return;
-
-            if (!long.TryParse(cookies["userId"], out var userId))
-                return;
-
-            var expireTime = (int)cookies.Expires.Subtract(DateTime.Now).TotalSeconds;
-            Auth(cookies["token"], expireTime, userId);
         }
     }
 }

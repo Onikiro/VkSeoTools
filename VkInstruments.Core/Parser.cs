@@ -32,7 +32,7 @@ namespace VkInstruments.Core
         /// Returns post id array (0 - ownerId, 1 - ItemId)
         /// </summary>
         /// <param name="uri">post link</param>
-        internal static long[] GetPostIds(string uri)
+        public static long[] GetPostIds(string uri)
 		{
 			var ids = new long[2];
 			const string idsPattern = "([-\\d]+)_([\\d]+)";

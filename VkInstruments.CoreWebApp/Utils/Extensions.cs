@@ -8,17 +8,6 @@ namespace VkInstruments.CoreWebApp.Utils
 {
     public static class Extensions
     {
-        public static string GetDescription(this Enum value)
-        {
-            var field = value.GetType().GetField(value.ToString());
-
-            var attribute
-                    = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute))
-                        as DescriptionAttribute;
-
-            return attribute == null ? value.ToString() : attribute.Description;
-        }
-
         public static SelectList ToSelectList<T>(this IEnumerable<T> source)
         {
             var list = source.Select(item => new SelectListItem
