@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VkInstruments.Core;
 using VkInstruments.Core.VkSystem;
 using VkInstruments.CoreWebApp.Utils;
@@ -6,8 +7,7 @@ using VkNet.Model.RequestParams;
 
 namespace VkInstruments.CoreWebApp.Controllers
 {
-    //TODO: добавить identity для проверки авторизации
-    //[Authorize]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IVkSystem _vk;

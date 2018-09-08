@@ -33,7 +33,7 @@
     <b>Укажите те настройки, по которым вам нужно отфильтровать список пользователей (все сразу указывать необязательно):</b><br />
 
     <b>1. Фильтр по полу:</b><br />
-    @Html.PartialAsync("EnumRadioButtonList", typeof(Sex))
+    @await Html.PartialAsync("EnumRadioButtonList", typeof(Sex))
 
     <b>2. Фильтр по возрасту:</b><br />
     @Html.Label("AgeFromLabel", "От", new { @for = "AgeFrom" })
@@ -47,13 +47,13 @@
 
     <b>4. Гео-фильтр (по стране, области или городу):</b><br />
     @Html.DropDownList("Country", ViewBag.Countries as SelectList, "Всё равно", new { @class = "form-control", @onchange = "UpdateCities(this.value)" })   
-    <div id="cities">@Html.PartialAsync("CityPartial", new Dictionary<long?, string>())</div>
+    <div id="cities">@await Html.PartialAsync("CityPartial", new Dictionary<long?, string>())</div>
 
     <b>5. Фильтр по имени:</b><br />
     @Html.TextBox("Query", string.Empty, new { @class = "form-control" })
 
     <b>6. Семейное положение:</b><br />
-    @Html.PartialAsync("EnumRadioButtonList", typeof(Status))
+    @await Html.PartialAsync("EnumRadioButtonList", typeof(Status))
 
     <br />
     <input id="submitPost" type="submit" class="btn btn-success" value="Начать фильтрацию данных" style="margin-top: 15px ">

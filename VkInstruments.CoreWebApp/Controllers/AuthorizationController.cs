@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VkInstruments.Core.VkSystem;
@@ -7,19 +11,19 @@ using VkNet.Enums.SafetyEnums;
 
 namespace VkInstruments.CoreWebApp.Controllers
 {
-    //TODO: добавить identity для проверки авторизации
-    //[AllowAnonymous]
+    [AllowAnonymous]
     public class AuthorizationController : Controller
     {
         private readonly IVkSystem _vk;
         private readonly AuthorizationVk _vkAuth;
         private static string _returnUrl;
+        private string _authType = CookieAuthenticationDefaults.AuthenticationScheme;
 
         public AuthorizationController(IVkSystem vk)
         {
             _vk = vk;
             _vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
-            _vkAuth.SetAuthParams(_vk.GetParams(0123456));
+            _vkAuth.SetAuthParams(_vk.GetParams(6447383));
         }
 
         public IActionResult Complete()
@@ -50,7 +54,10 @@ namespace VkInstruments.CoreWebApp.Controllers
                 Response.Cookies.Append("expireTime", expireTime, cookie);
                 Response.Cookies.Append("userId", userId, cookie);
 
-                //FormsAuthentication.SetAuthCookie(_vk.Vk.UserId.ToString(), false);
+                var claims = new[] { new Claim(ClaimTypes.Name, _vk.Vk.UserId.ToString()) };
+                var identity = new ClaimsIdentity(claims, _authType);
+                var properties = new AuthenticationProperties { IsPersistent = false };
+                HttpContext.SignInAsync(_authType, new ClaimsPrincipal(identity), properties);
 
                 if (string.IsNullOrEmpty(_returnUrl)) return RedirectToAction("Parser", "Home");
 
@@ -75,7 +82,8 @@ namespace VkInstruments.CoreWebApp.Controllers
 
         public IActionResult Logout()
         {
-            //FormsAuthentication.SignOut();
+            HttpContext.SignOutAsync(_authType);
+
             return RedirectToAction("Login");
         }
     }
