@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Extensions.Logging.Abstractions;
-using NLog;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;
