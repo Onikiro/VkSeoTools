@@ -15,12 +15,12 @@ Gets VK profile links, filters them and returns filtered list.
 
 
 ## Installing
-To deploy this ASP.Net MVC5 app you must: 
+To deploy this .net Core app you must: 
 1. Сreate a VK app 
 2. Choose OpenAPI
 3. Specify your domain (where your web app will be deployed) in settings.
 
-4. In VkInstruments.MVC.Auth.AuthorizationVk paste your domain into redirect_uri:
+4. In VkInstruments.CoreWebApp.Auth.AuthorizationVk paste your domain into redirect_uri:
 
 ```c#
         public Uri CreateAuthorizeUrl(ulong clientId, ulong scope, Display display, string state)
@@ -31,7 +31,7 @@ To deploy this ASP.Net MVC5 app you must:
         }
 ```
 
-5. In VkInstruments.MVC.Controllers.AuthorizationController paste your appId from VK:
+5. In VkInstruments.CoreWebApp.Controllers.AuthorizationController paste your appId from VK:
 
 
 ```c#
