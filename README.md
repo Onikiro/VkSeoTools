@@ -51,3 +51,7 @@ I haven't realized some features, so you can take any task from Projects menu an
 ## Used libraries
 
 [Vkontakte API for .NET](https://vknet.github.io/vk/)
+
+### Supported by
+
+[<img src="VkInstruments.CoreWebApp/wwwroot/jetbrains.png">](https://www.jetbrains.com/?from=VkInstruments)
