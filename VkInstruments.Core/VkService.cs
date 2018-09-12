@@ -18,7 +18,7 @@ namespace VkInstruments.Core
             _vk = vk;
         }
 
-		public async Task<IEnumerable<long>> ParseLikesFromPost(string input)
+		public async Task<List<long>> ParseLikesFromPost(string input)
 		{
             var postLinks = input.Split('\n');
             var likeIds = new List<long>();
@@ -34,14 +34,14 @@ namespace VkInstruments.Core
             return likeIds;
         }
 
-		public async Task<IEnumerable<User>> FilterIds(string userIds, UserSearchParams searchParams)
+		public async Task<List<User>> FilterIds(string userIds, UserSearchParams searchParams)
         {
             var userNames = userIds.Replace("vk.com/id", "")
                 .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
             var users = await _vk.Vk.Users.GetAsync(userNames, UserFilter.GetProfileFields(searchParams));
 
-            return UserFilter.ApplyFilter(users, searchParams);
+            return UserFilter.ApplyFilter(users, searchParams).ToList();
         }
 
         public async Task<Dictionary<long?, string>> GetCountries(bool? needAll = null)
