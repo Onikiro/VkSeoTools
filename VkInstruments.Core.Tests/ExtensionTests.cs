@@ -10,10 +10,10 @@ namespace VkInstruments.Core.Tests
         [Test]
         public void GetDescription()
         {
-            var expectedDescription = "В активном поиске";
-            var badDescription1 = "В активном";
-            var badDescription2 = "В поиске";
-            var badDescription3 = "активном поиске";
+            var expectedDescription = "Р’ Р°РєС‚РёРІРЅРѕРј РїРѕРёСЃРєРµ";
+            var badDescription1 = "Р’ Р°РєС‚РёРІРЅРѕРј";
+            var badDescription2 = "Р’ РїРѕРёСЃРєРµ";
+            var badDescription3 = "Р°РєС‚РёРІРЅРѕРј РїРѕРёСЃРєРµ";
             var actualDescription = Status.TheActiveSearch.GetDescription();
 
             Assert.AreEqual(expectedDescription, actualDescription);
