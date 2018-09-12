@@ -10,8 +10,8 @@ namespace VkInstruments.Core
 
         public static AccessToken FromString(string token, string expiresIn, string userId)
         {
-            long.TryParse(userId, out long parseUserId);
-            int.TryParse(expiresIn, out int parseExpiresIn);
+            long.TryParse(userId, out var parseUserId);
+            int.TryParse(expiresIn, out var parseExpiresIn);
 
             return new AccessToken
             {

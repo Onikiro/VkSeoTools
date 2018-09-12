@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VkNet;
@@ -10,68 +10,65 @@ using VkNet.Model.RequestParams;
 namespace VkInstruments.Core
 {
     public static class Parser
-	{
-		private static async Task<IEnumerable<long>> GetLikesSegment(IVkApiCategories vk, string uri, uint index = 0)
-		{
-			var ids = GetPostIds(uri);
-
-			if (!ids.Any()) return new List<long>(1);
-
-			return await vk.Likes.GetListAsync(new LikesGetListParams
-			{
-				Type = LikeObjectType.Post,
-				Filter = LikesFilter.Likes,
-				OwnerId = ids[0],
-				ItemId = ids[1],
-				Extended = false,
-				Offset = index,
-				Count = 1000
-			});
-		}
+    {
+        private static async Task<IEnumerable<long>> GetLikesSegment(IVkApiCategories vk, Tuple<long, long> ids, uint index = 0)
+        {
+            return await vk.Likes.GetListAsync(new LikesGetListParams
+            {
+                Type = LikeObjectType.Post,
+                Filter = LikesFilter.Likes,
+                OwnerId = ids.Item1,
+                ItemId = ids.Item2,
+                Extended = false,
+                Offset = index,
+                Count = 1000
+            });
+        }
 
         /// <summary>
-        /// Returns post id array (0 - ownerId, 1 - ItemId)
+        /// Returns post ids tuple (Item1 - ownerId, Item2 - ItemId)
         /// </summary>
         /// <param name="uri">post link</param>
-        public static long[] GetPostIds(string uri)
-		{
-		    const string idsPattern = "([-\\d]+)_([\\d]+)";
-            var ids = new long[2];		
-			var idsReg = new Regex(idsPattern);
-			var groups = idsReg.Match(uri).Groups;
+        public static Tuple<long, long> GetPostIds(string uri)
+        {
+            const string idsPattern = "([-\\d]+)_([\\d]+)";
 
-			if (!long.TryParse(groups[1].Value, out ids[0]) ||
-				!long.TryParse(groups[2].Value, out ids[1]))
-				throw new System.FormatException("Incorrect uri.");
+            var groups = Regex.Match(uri, idsPattern).Groups;
 
-		    if (ids[1] < 0)
-		    {
-		        var tmp = ids[0];
-		        ids[0] = ids[1];
-		        ids[1] = tmp;
-		    }
+            if (!long.TryParse(groups[1].Value, out var ownerId) ||
+                !long.TryParse(groups[2].Value, out var itemId))
+                throw new FormatException("Incorrect uri.");
 
-			return ids;
-		}
+            if (itemId < 0)
+            {
+                // swap without temp
+                ownerId += itemId;
+                itemId = ownerId - itemId;
+                ownerId -= itemId;
+            }
 
-	    public static async Task<IEnumerable<long>> GetLikes(VkApi vk, string uri)
-		{
-			var idsList = new List<long>(100);
-			var isEnded = false;
-			uint offset = 0;
-			while (!isEnded)
-			{
-				isEnded = true;
-			    var likeSegment = await GetLikesSegment(vk, uri, offset);
-			    idsList.AddRange(likeSegment);
-				if (idsList.Count > 0 && idsList.Count % 1000 == 0)
-				{
-					offset += 1000;
-					isEnded = false;
-				}
-			}
+            return new Tuple<long, long>(ownerId, itemId);
+        }
 
-			return idsList;
-		}
-	}
+        public static async Task<List<long>> GetLikes(VkApi vk, string uri)
+        {
+            var linkIds = GetPostIds(uri);
+            var idsList = new List<long>(100);
+            var isEnded = false;
+            uint offset = 0;
+            while (!isEnded)
+            {
+                isEnded = true;
+                var likeSegment = await GetLikesSegment(vk, linkIds, offset);
+                idsList.AddRange(likeSegment);
+                if (idsList.Count > 0 && idsList.Count % 1000 == 0)
+                {
+                    offset += 1000;
+                    isEnded = false;
+                }
+            }
+
+            return idsList;
+        }
+    }
 }
