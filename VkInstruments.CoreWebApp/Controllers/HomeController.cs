@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VkInstruments.Core;
-using VkInstruments.Core.VkSystem;
 using VkInstruments.CoreWebApp.Utils;
 using VkNet.Model.RequestParams;
 
@@ -10,18 +10,11 @@ namespace VkInstruments.CoreWebApp.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly IVkSystem _vk;
         private readonly IVkService _vkService;
 
-        public HomeController(IVkSystem vk, IVkService vkService)
+        public HomeController(IVkService vkService)
         {
-            _vk = vk;
             _vkService = vkService;
-        }
-
-        private void ReauthorizeVkSystem()
-        {
-            _vk.Auth(Request.Cookies["token"], Request.Cookies["userId"], Request.Cookies["expireTime"]);
         }
 
         public IActionResult Parser()
@@ -30,40 +23,32 @@ namespace VkInstruments.CoreWebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult ParserResult(string postLink)
+        public async Task<IActionResult> ParserResult(string postLink)
         {
-            ReauthorizeVkSystem();
-
-            var model = _vkService.ParseLikesFromPost(postLink);
+            var model = await _vkService.ParseLikesFromPost(postLink);
 
             return View(model);
         }
 
-        public IActionResult Filter(string userIds)
+        public async Task<IActionResult> Filter(string userIds)
         {
-            ReauthorizeVkSystem();
-
             ViewBag.UserIds = userIds;
-            ViewBag.Countries = _vkService.GetCountries().ToSelectList();
+            ViewBag.Countries = (await _vkService.GetCountries()).ToSelectList();
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult FilterResult(string userIds, UserSearchParams @params)
+        public async Task<IActionResult> FilterResult(string userIds, UserSearchParams @params)
         {
-            ReauthorizeVkSystem();
-
-            var model = _vkService.FilterIds(userIds, @params);
+            var model = await _vkService.FilterIds(userIds, @params);
 
             return View(model);
         }
 
-        public IActionResult CityPartial(int countryId)
+        public async Task<IActionResult> CityPartial(int countryId)
         {
-            ReauthorizeVkSystem();
-
-            var model = _vkService.GetCities(countryId);
+            var model = await Task.Run(() => _vkService.GetCities(countryId));
 
             return PartialView(model);
         }

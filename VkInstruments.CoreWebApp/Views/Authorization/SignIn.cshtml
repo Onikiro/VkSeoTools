@@ -13,20 +13,19 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    function Login() {
+    function SignIn() {
         var form = $('#authForm');
         $('#returnUrl').val(getParameterByName('ReturnUrl', null));
         form.submit();
     }
 </script>
 
-@using (Html.BeginForm("Start", "Authorization", FormMethod.Post, new { @id = "authForm"}))
-{
+<form asp-area="" asp-controller="Authorization" asp-action="SignInVk" method="post" id="authForm">
     <div class="text-center">
         <h5 class="text-warning">Прежде чем продолжить, необходимо авторизоваться!</h5>
-        <input type="hidden" id ="returnUrl" name="returnUrl" value=""/>
-        <a class="btn btn-primary" style="width: 200px; color: white" onclick="Login()">Войти через ВК</a>
+        <input type="hidden" id="returnUrl" name="returnUrl" o value="javascript:$('#authForm').submit()" />
+        <a class="btn btn-primary" style="width: 200px; color: white" href="javascript:SignIn()">Войти через ВК</a>
     </div>
-}
+</form>
 
 

@@ -8,9 +8,8 @@
 <b class="text-primary">https://vk.com/wall12345_67890</b> или
 <b class="text-primary">https://vk.com/group_name?wall=-111_22222</b>
 
-@using (Html.BeginForm("ParserResult", "Home", FormMethod.Post))
-{
-    <input name="postLink" class="form-control" style="margin-top: 10px; width: 25%; max-width: 500px">
-    <input id="submitPost" type="submit" class="btn btn-success" value="Начать поиск аудитории" style="margin-top: 15px ">
-}
+<form asp-area="" asp-controller="Home" asp-action="ParserResult" method="post">    
+    <textarea name="postLink" class="form-control" rows="5" style="margin-top: 10px; max-width: 100%"></textarea>
+    <input type="submit" class="btn btn-success" value="Начать поиск аудитории" style="margin-top: 15px">
+</form>
 

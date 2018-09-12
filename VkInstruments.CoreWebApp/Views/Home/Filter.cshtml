@@ -2,14 +2,18 @@
 @using VkInstruments.Core.Enums
 @using VkInstruments.CoreWebApp.Utils
 
+@model VkNet.Model.RequestParams.UserSearchParams
+
 @{
     ViewBag.Title = "Filter";
 
+    var userIds = ViewBag.UserIds as string;
     var ageRange = Enumerable.Range(1, 100).ToSelectList();
     var dayRange = Enumerable.Range(1, 31).ToSelectList();
     var monthRange = Enumerable.Range(1, 12)
         .ToDictionary(x => x, x => DateTimeFormatInfo.CurrentInfo?.GetMonthName(x))
         .ToSelectList();
+    var countries = ViewBag.Countries as SelectList;
 }
 
 <script>
@@ -26,35 +30,38 @@
 <b class="text-primary">https://vk.com/id123456 </b>
 или просто айди 123456, по 1 ссылке на каждую строку
 
-@using (Html.BeginForm("FilterResult", "Home", FormMethod.Post))
-{
-    @Html.TextArea("userIds", ViewBag.UserIds as string, new { @class = "form-control", @style = "width: 500px" })
+<form asp-area="" asp-controller="Home" asp-action="FilterResult" method="post">
+    <textarea name="userIds" class="form-control" rows="5" style="margin-top: 10px; max-width: 100%">@userIds</textarea>
 
     <b>Укажите те настройки, по которым вам нужно отфильтровать список пользователей (все сразу указывать необязательно):</b><br />
 
     <b>1. Фильтр по полу:</b><br />
-    @await Html.PartialAsync("EnumRadioButtonList", typeof(Sex))
+    <partial name="EnumRadioButtonList" model="typeof(Sex)"/>
 
     <b>2. Фильтр по возрасту:</b><br />
-    @Html.Label("AgeFromLabel", "От", new { @for = "AgeFrom" })
-    @Html.DropDownList("AgeFrom", ageRange, "Всё равно", new { @class = "form-control" })
-    @Html.Label("AgeToLabel", "до", new { @for = "AgeToLabel" })
-    @Html.DropDownList("AgeTo", ageRange, "Всё равно", new { @class = "form-control" })
+    <label asp-for="AgeFrom"></label>
+    <select asp-for="AgeFrom" asp-items="ageRange" class="form-control"><option>Всё равно</option></select>
+    <label asp-for="AgeTo"></label>
+    <select asp-for="AgeTo" asp-items="ageRange" class="form-control"><option>Всё равно</option></select>
 
     <b>3. Фильтр по дню рождения:</b><br />
-    @Html.DropDownList("BirthDay", dayRange, "Всё равно", new { @class = "form-control" })
-    @Html.DropDownList("BirthMonth", monthRange, "Всё равно", new { @class = "form-control" })
+    <label asp-for="BirthDay"></label>
+    <select asp-for="BirthDay" asp-items="dayRange" class="form-control"><option>Всё равно</option></select>
+    <label asp-for="BirthMonth"></label>
+    <select asp-for="BirthMonth" asp-items="monthRange" class="form-control"><option>Всё равно</option></select>
 
     <b>4. Гео-фильтр (по стране, области или городу):</b><br />
-    @Html.DropDownList("Country", ViewBag.Countries as SelectList, "Всё равно", new { @class = "form-control", @onchange = "UpdateCities(this.value)" })   
-    <div id="cities">@await Html.PartialAsync("CityPartial", new Dictionary<long?, string>())</div>
+    <label asp-for="Country"></label>
+    <select asp-for="Country" asp-items="countries" class="form-control" onchange="UpdateCities(this.value)"><option>Всё равно</option></select>
+    <label asp-for="City"></label>
+    <div id="cities"><partial name="CityPartial" model="new Dictionary<long?, string>()"/></div>
 
     <b>5. Фильтр по имени:</b><br />
-    @Html.TextBox("Query", string.Empty, new { @class = "form-control" })
+    <input asp-for="Query" class="form-control"/>
 
     <b>6. Семейное положение:</b><br />
-    @await Html.PartialAsync("EnumRadioButtonList", typeof(Status))
+    <partial name="EnumRadioButtonList" model="typeof(Status)"/>
 
     <br />
-    <input id="submitPost" type="submit" class="btn btn-success" value="Начать фильтрацию данных" style="margin-top: 15px ">
-}
+    <input type="submit" class="btn btn-success" value="Начать фильтрацию данных" style="margin-top: 15px ">
+</form>

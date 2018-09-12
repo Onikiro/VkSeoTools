@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using VkNet;
 using VkNet.Abstractions;
 using VkNet.Enums.SafetyEnums;
@@ -10,13 +11,13 @@ namespace VkInstruments.Core
 {
     public static class Parser
 	{
-		private static IEnumerable<long> GetLikesSegment(IVkApiCategories vk, string uri, uint index = 0)
+		private static async Task<IEnumerable<long>> GetLikesSegment(IVkApiCategories vk, string uri, uint index = 0)
 		{
 			var ids = GetPostIds(uri);
-			if (!ids.Any())
-				return new List<long>(1);
 
-			return vk.Likes.GetList(new LikesGetListParams
+			if (!ids.Any()) return new List<long>(1);
+
+			return await vk.Likes.GetListAsync(new LikesGetListParams
 			{
 				Type = LikeObjectType.Post,
 				Filter = LikesFilter.Likes,
@@ -25,7 +26,7 @@ namespace VkInstruments.Core
 				Extended = false,
 				Offset = index,
 				Count = 1000
-			}).ToList();
+			});
 		}
 
         /// <summary>
@@ -34,10 +35,11 @@ namespace VkInstruments.Core
         /// <param name="uri">post link</param>
         public static long[] GetPostIds(string uri)
 		{
-			var ids = new long[2];
-			const string idsPattern = "([-\\d]+)_([\\d]+)";
+		    const string idsPattern = "([-\\d]+)_([\\d]+)";
+            var ids = new long[2];		
 			var idsReg = new Regex(idsPattern);
 			var groups = idsReg.Match(uri).Groups;
+
 			if (!long.TryParse(groups[1].Value, out ids[0]) ||
 				!long.TryParse(groups[2].Value, out ids[1]))
 				throw new System.FormatException("Incorrect uri.");
@@ -52,7 +54,7 @@ namespace VkInstruments.Core
 			return ids;
 		}
 
-	    public static List<long> GetLikes(VkApi vk, string uri)
+	    public static async Task<IEnumerable<long>> GetLikes(VkApi vk, string uri)
 		{
 			var idsList = new List<long>(100);
 			var isEnded = false;
@@ -60,8 +62,8 @@ namespace VkInstruments.Core
 			while (!isEnded)
 			{
 				isEnded = true;
-			    var a = GetLikesSegment(vk, uri, offset);
-			    idsList.AddRange(a);
+			    var likeSegment = await GetLikesSegment(vk, uri, offset);
+			    idsList.AddRange(likeSegment);
 				if (idsList.Count > 0 && idsList.Count % 1000 == 0)
 				{
 					offset += 1000;

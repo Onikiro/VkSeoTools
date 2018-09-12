@@ -31,7 +31,7 @@ namespace VkInstruments.CoreWebApp
                 .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = new PathString("/Authorization/Login");
+                    options.LoginPath = new PathString("/Authorization/SignIn");
                     options.SlidingExpiration = true;
                 });
 

@@ -11,12 +11,14 @@
 <body>
     <header class="blog-masthead">
         <nav class="navbar">
-            <div class="container">
-                <div class="left-nav">
-                    <a class="nav-link" href="../Authorization/Logout">Выйти</a>                   
-                    <a class="nav-link" href="../Home/Parser">Парсер лайков</a>
-                    <a class="nav-link" href="../Home/Filter">Фильтр пользователей</a>
-                </div>
+            <div class="container">               
+                <form asp-area="" asp-controller="Authorization" asp-action="SignOut" method="post" id="logoutForm">
+                    <div class="left-nav">
+                        <a class="nav-link" href="javascript:$('#logoutForm').submit()">Выйти</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Parser">Парсер лайков</a>
+                        <a class="nav-link" asp-controller="Home" asp-action="Filter">Фильтр пользователей</a>
+                    </div>
+                </form>               
                 <div class="right-nav">
                     <a class="right-title">VK Instruments</a>
                 </div>

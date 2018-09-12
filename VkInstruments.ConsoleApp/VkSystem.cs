@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using VkNet.Exception;
 using VkNet.Model;
 
@@ -17,13 +18,13 @@ namespace VkInstruments.ConsoleApp
             _password = Console.ReadLine();
         }
 
-        public new void Auth()
+        public new async Task AuthAsync()
         {
             SetCredentials();
             bool isLoggedIn;
             try
             {
-                Vk.Authorize(new ApiAuthParams
+                await Vk.AuthorizeAsync(new ApiAuthParams
                 {
                     ApplicationId = 6634517,
                     Login = _login,

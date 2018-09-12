@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging.Abstractions;
 using VkNet;
 using VkNet.Enums.Filters;
@@ -29,27 +30,14 @@ namespace VkInstruments.Core.VkSystem
             };
         }
 
-        public void Auth()
+        public Task AuthAsync()
         {
             throw new NotImplementedException();
         }
 
-        public void Auth(string token, int expireTime, long userId)
+        public async Task AuthAsync(AccessToken token)
         {
-            Vk.Authorize(new ApiAuthParams
-            {
-                AccessToken = token,
-                TokenExpireTime = expireTime,
-                UserId = userId
-            });
-        }
-
-        public void Auth(string token, string expireTime, string userId)
-        {
-            if (!long.TryParse(userId, out var userIdResult) || !int.TryParse(expireTime, out var expireTimeResult))
-                return;
-
-            Auth(token, expireTimeResult, userIdResult);
+            await Vk.AuthorizeAsync(token.ToApiAuthParams());
         }
     }
 }

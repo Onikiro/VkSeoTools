@@ -1,10 +1,10 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using VkInstruments.Core;
 using VkInstruments.Core.VkSystem;
 using VkInstruments.CoreWebApp.Auth;
 using VkNet.Enums.SafetyEnums;
@@ -15,76 +15,75 @@ namespace VkInstruments.CoreWebApp.Controllers
     public class AuthorizationController : Controller
     {
         private readonly IVkSystem _vk;
-        private readonly AuthorizationVk _vkAuth;
+        private readonly AuthorizationVk _vkAuth;       
         private static string _returnUrl;
-        private string _authType = CookieAuthenticationDefaults.AuthenticationScheme;
 
         public AuthorizationController(IVkSystem vk)
         {
             _vk = vk;
             _vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
-            _vkAuth.SetAuthParams(_vk.GetParams(6447383));
+            _vkAuth.SetAuthParams(_vk.GetParams(6447383));         
         }
 
+        [HttpGet]
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SignInVk(string returnUrl = null)
+        {
+            _returnUrl = returnUrl;
+
+            var authUri = _vkAuth.CreateAuthorizeUrl(
+                _vkAuth.AuthParams.ApplicationId,
+                _vkAuth.AuthParams.Settings.ToUInt64(), 
+                Display.Page, "123456");
+
+            return Redirect(authUri.AbsoluteUri);
+        }
+
+        [HttpGet]
         public IActionResult Complete()
         {
             return View();
         }
 
-        public IActionResult ReceiveToken()
+        [HttpGet]
+        public async Task<IActionResult> ReceiveToken(string token, string expiresIn, string userId)
         {
-            var token = Request.Query["access_token"];
-            var expireTime = Request.Query["expires_in"];
-            var userId = Request.Query["user_id"];
-
-            _vk.Auth(token, expireTime, userId);
-            if (_vk.Vk.IsAuthorized)
+            var accessToken = AccessToken.FromString(token, expiresIn, userId);
+            if (accessToken.Token != null)
             {
-                if (!long.TryParse(expireTime, out var expireSeconds))
-                {
-                    return RedirectToAction("Parser", "Home");
-                }
-
-                var cookie = new CookieOptions
-                {
-                    Expires = DateTime.Now.AddSeconds(expireSeconds)
-                };
-
-                Response.Cookies.Append("token", token, cookie);
-                Response.Cookies.Append("expireTime", expireTime, cookie);
-                Response.Cookies.Append("userId", userId, cookie);
-
-                var claims = new[] { new Claim(ClaimTypes.Name, _vk.Vk.UserId.ToString()) };
-                var identity = new ClaimsIdentity(claims, _authType);
-                var properties = new AuthenticationProperties { IsPersistent = false };
-                HttpContext.SignInAsync(_authType, new ClaimsPrincipal(identity), properties);
+                await _vk.AuthAsync(accessToken);
+                await SignInAsync();
 
                 if (string.IsNullOrEmpty(_returnUrl)) return RedirectToAction("Parser", "Home");
 
                 return new RedirectResult(_returnUrl);
-            }
-
-            return RedirectToAction("Login");
+            }            
+            return RedirectToAction("SignIn");
         }
 
-        public IActionResult Start(string returnUrl)
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> SignOut()
         {
-            _returnUrl = returnUrl;
-            var authUri = _vkAuth.CreateAuthorizeUrl(_vkAuth.AuthParams.ApplicationId,
-                _vkAuth.AuthParams.Settings.ToUInt64(), Display.Page, "123456");
-            return Redirect(authUri.AbsoluteUri);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("SignIn");
         }
 
-        public IActionResult Login()
+        private async Task SignInAsync()
         {
-            return View();
-        }
+            var claims = new[] { new Claim(ClaimTypes.Name, _vk.Vk.UserId.ToString()) };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var properties = new AuthenticationProperties { IsPersistent = false };
 
-        public IActionResult Logout()
-        {
-            HttpContext.SignOutAsync(_authType);
-
-            return RedirectToAction("Login");
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(identity), properties);
         }
     }
 }

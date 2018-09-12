@@ -1,4 +1,5 @@
 ﻿@{
+    Layout = "~/Views/Shared/_AuthorizationLayout.cshtml";
     ViewBag.Title = "Auth...";
 }
 
@@ -12,7 +13,7 @@
     token = GetMatch(hash, tokenPattern);
     expires = GetMatch(hash, expiresPattern);
     userId = GetMatch(hash, userPattern);
-    window.location = "ReceiveToken?access_token=" + token + "&expires_in=" + expires + "&user_id=" + userId;
+    window.location = "ReceiveToken?token=" + token + "&expiresIn=" + expires + "&userId=" + userId;
 
     function GetMatch(hash, pattern) {
         var match;
