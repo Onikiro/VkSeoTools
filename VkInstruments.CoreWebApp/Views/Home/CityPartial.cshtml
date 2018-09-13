@@ -3,7 +3,6 @@
     Layout = null;
 }
 
-@using VkInstruments.CoreWebApp.Utils
-@model Dictionary<long?, string>
+@model SelectList
 
-@Html.DropDownList("City", Model?.ToSelectList(), "Всё равно", new { @class = "form-control" })
+<select asp-items="Model" name="City" id="City" class="form-control"><option>Всё равно</option></select>

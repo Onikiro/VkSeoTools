@@ -4,10 +4,8 @@
 
 @foreach (var li in Enum.GetValues(Model).OfType<Enum>())
 {
-    var id = $"ChekBox_{ViewData.TemplateInfo.HtmlFieldPrefix}_{Model.FullName}_{li.ToString()}";
-
     <div class="editor-radio">
-        @Html.CheckBox(li.ToString(), false, new { @id = id })
-        @Html.Label(id, li.GetDescription(), new { @for = id })
+        <input id="@li.ToString()" name="@Model.Name" value="@li.ToString()" type="checkbox" />
+        <label for="@li.ToString()">@li.GetDescription()</label>
     </div>
 }

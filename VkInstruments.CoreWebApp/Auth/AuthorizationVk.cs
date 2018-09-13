@@ -30,7 +30,7 @@ namespace VkInstruments.CoreWebApp.Auth
             var builder = new StringBuilder("https://oauth.vk.com/authorize?");
 
             builder.Append($"client_id={clientId}&");
-            builder.Append($"redirect_uri=YourDomain/Authorization/Complete&");
+            builder.Append($"redirect_uri={AppProperties.DOMAIN}/Authorization/Complete&");
             builder.Append($"display={display}&");
             builder.Append($"scope={scope}&");
             builder.Append("response_type=token&");

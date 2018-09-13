@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VkInstruments.Core;
+using VkInstruments.CoreWebApp.Model;
 using VkInstruments.CoreWebApp.Utils;
 using VkNet.Model.RequestParams;
 
@@ -32,23 +33,26 @@ namespace VkInstruments.CoreWebApp.Controllers
 
         public async Task<IActionResult> Filter(string userIds)
         {
-            ViewBag.UserIds = userIds;
-            ViewBag.Countries = (await _vkService.GetCountries()).ToSelectList();
+            var model = new UserFilterViewModel
+            {
+                UserIds = userIds,
+                Countries = (await _vkService.GetCountries()).ToSelectList()
+            };
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> FilterResult(string userIds, UserSearchParams @params)
+        public async Task<IActionResult> FilterResult(string userIds, UserSearchParams searchParams)
         {
-            var model = await _vkService.FilterIds(userIds, @params);
+            var model = await _vkService.FilterIds(userIds, searchParams);
 
             return View(model);
         }
 
         public async Task<IActionResult> CityPartial(int countryId)
         {
-            var model = await Task.Run(() => _vkService.GetCities(countryId));
+            var model = (await _vkService.GetCities(countryId)).ToSelectList();
 
             return PartialView(model);
         }

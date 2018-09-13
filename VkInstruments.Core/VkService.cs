@@ -44,19 +44,19 @@ namespace VkInstruments.Core
             return UserFilter.ApplyFilter(users, searchParams).ToList();
         }
 
-        public async Task<Dictionary<long?, string>> GetCountries(bool? needAll = null)
+        public async Task<Dictionary<long, string>> GetCountries(bool? needAll = null)
         {
             var result = await _vk.Vk.Database.GetCountriesAsync(needAll);
 
-            return result.ToDictionary(x => x.Id, x => x.Title);
+            return result.Where(x => x.Id.HasValue).ToDictionary(x => x.Id.Value, x => x.Title);
         }
 
-        public async Task<Dictionary<long?, string>> GetCities(int countryId)
+        public async Task<Dictionary<long, string>> GetCities(int countryId)
         {
             var result = await _vk.Vk.Database
                 .GetCitiesAsync(new GetCitiesParams {CountryId = countryId});
 
-            return result.ToDictionary(x => x.Id, x => x.Title);
+            return result.Where(x => x.Id.HasValue).ToDictionary(x => x.Id.Value, x => x.Title);
         }
     }
 }

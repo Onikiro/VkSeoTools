@@ -1,37 +1,27 @@
-﻿@using System.Globalization
-@using VkInstruments.Core.Enums
-@using VkInstruments.CoreWebApp.Utils
+﻿@using VkInstruments.Core.Enums
+@using VkInstruments.CoreWebApp.Model
 
-@model VkNet.Model.RequestParams.UserSearchParams
+@model UserFilterViewModel
 
 @{
     ViewBag.Title = "Filter";
-
-    var userIds = ViewBag.UserIds as string;
-    var ageRange = Enumerable.Range(1, 100).ToSelectList();
-    var dayRange = Enumerable.Range(1, 31).ToSelectList();
-    var monthRange = Enumerable.Range(1, 12)
-        .ToDictionary(x => x, x => DateTimeFormatInfo.CurrentInfo?.GetMonthName(x))
-        .ToSelectList();
-    var countries = ViewBag.Countries as SelectList;
 }
 
 <script>
     function UpdateCities(countryId) {
-        $.post("/Home/CityPartial", { countryId: countryId }, function (data) {
-            $("#cities").html(data);
-        });
+        if (!isNaN(countryId)) {
+            $.post("/Home/CityPartial", { countryId: countryId }, function (data) {
+                $("#cities").html(data);
+            });
+        }       
     }
 </script>
 
 <h3 class="text-center">Фильтр пользователй</h3>
 
-Введите список пользователей вида
-<b class="text-primary">https://vk.com/id123456 </b>
-или просто айди 123456, по 1 ссылке на каждую строку
-
 <form asp-area="" asp-controller="Home" asp-action="FilterResult" method="post">
-    <textarea name="userIds" class="form-control" rows="5" style="margin-top: 10px; max-width: 100%">@userIds</textarea>
+    <b>Введите список пользователей вида <b class="text-primary">https://vk.com/id123456 </b> или просто айди 123456, по 1 ссылке на каждую строку</b>
+    <textarea asp-for="UserIds" name="userIds" class="form-control" rows="5" style="margin-top: 10px; max-width: 100%"></textarea>
 
     <b>Укажите те настройки, по которым вам нужно отфильтровать список пользователей (все сразу указывать необязательно):</b><br />
 
@@ -40,21 +30,21 @@
 
     <b>2. Фильтр по возрасту:</b><br />
     <label asp-for="AgeFrom"></label>
-    <select asp-for="AgeFrom" asp-items="ageRange" class="form-control"><option>Всё равно</option></select>
+    <select asp-for="AgeFrom" asp-items="Model.AgeRange" class="form-control"><option>Всё равно</option></select>
     <label asp-for="AgeTo"></label>
-    <select asp-for="AgeTo" asp-items="ageRange" class="form-control"><option>Всё равно</option></select>
+    <select asp-for="AgeTo" asp-items="Model.AgeRange" class="form-control"><option>Всё равно</option></select>
 
     <b>3. Фильтр по дню рождения:</b><br />
     <label asp-for="BirthDay"></label>
-    <select asp-for="BirthDay" asp-items="dayRange" class="form-control"><option>Всё равно</option></select>
+    <select asp-for="BirthDay" asp-items="Model.DayRange" class="form-control"><option>Всё равно</option></select>
     <label asp-for="BirthMonth"></label>
-    <select asp-for="BirthMonth" asp-items="monthRange" class="form-control"><option>Всё равно</option></select>
+    <select asp-for="BirthMonth" asp-items="Model.MonthRange" class="form-control"><option>Всё равно</option></select>
 
     <b>4. Гео-фильтр (по стране, области или городу):</b><br />
     <label asp-for="Country"></label>
-    <select asp-for="Country" asp-items="countries" class="form-control" onchange="UpdateCities(this.value)"><option>Всё равно</option></select>
+    <select asp-for="Country" asp-items="Model.Countries" class="form-control" onchange="UpdateCities(this.value)"><option>Всё равно</option></select>
     <label asp-for="City"></label>
-    <div id="cities"><partial name="CityPartial" model="new Dictionary<long?, string>()"/></div>
+    <div id="cities"><partial name="CityPartial" model="Model.Cities"/></div>
 
     <b>5. Фильтр по имени:</b><br />
     <input asp-for="Query" class="form-control"/>
@@ -63,5 +53,5 @@
     <partial name="EnumRadioButtonList" model="typeof(Status)"/>
 
     <br />
-    <input type="submit" class="btn btn-success" value="Начать фильтрацию данных" style="margin-top: 15px ">
+    <input type="submit" class="btn btn-success" value="Начать фильтрацию данных" style="margin-top: 15px">
 </form>

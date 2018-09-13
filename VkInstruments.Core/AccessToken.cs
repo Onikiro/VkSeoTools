@@ -4,9 +4,9 @@ namespace VkInstruments.Core
 {
     public class AccessToken
     {
-        public string Token { get; set; }
-        public long UserId { get; set; }
-        public int ExpiresIn { get; set; }
+        public string Token { get; private set; }
+        public long UserId { get; private set; }
+        public int ExpiresIn { get; private set; }
 
         public static AccessToken FromString(string token, string expiresIn, string userId)
         {

@@ -22,7 +22,7 @@ namespace VkInstruments.CoreWebApp.Controllers
         {
             _vk = vk;
             _vkAuth = new AuthorizationVk(_vk.Vk.VkApiVersion);
-            _vkAuth.SetAuthParams(_vk.GetParams(6447383));         
+            _vkAuth.SetAuthParams(_vk.GetParams(AppProperties.APP_ID));         
         }
 
         [HttpGet]
