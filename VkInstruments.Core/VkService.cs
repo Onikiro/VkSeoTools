@@ -18,8 +18,8 @@ namespace VkInstruments.Core
             _vk = vk;
         }
 
-		public async Task<List<long>> ParseLikesFromPost(string input)
-		{
+        public async Task<List<long>> ParseLikesFromPost(string input)
+        {
             var postLinks = input.Split('\n');
             var likeIds = new List<long>();
 
@@ -34,7 +34,7 @@ namespace VkInstruments.Core
             return likeIds;
         }
 
-		public async Task<List<User>> FilterIds(string userIds, UserSearchParams searchParams)
+        public async Task<List<User>> FilterIds(string userIds, UserSearchParams searchParams)
         {
             var userNames = userIds.Replace("vk.com/id", "")
                 .Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -54,9 +54,16 @@ namespace VkInstruments.Core
         public async Task<Dictionary<long, string>> GetCities(int countryId)
         {
             var result = await _vk.Vk.Database
-                .GetCitiesAsync(new GetCitiesParams {CountryId = countryId});
+                .GetCitiesAsync(new GetCitiesParams { CountryId = countryId });
 
             return result.Where(x => x.Id.HasValue).ToDictionary(x => x.Id.Value, x => x.Title);
+        }
+
+        public async Task<List<User>> FilterIdsByPostLinkAsync(string input, UserSearchParams @params)
+        {
+            var ids = await ParseLikesFromPost(input);
+            var result = await _vk.Vk.Users.GetAsync(ids, UserFilter.GetProfileFields(@params));
+            return UserFilter.ApplyFilter(result, @params).ToList();
         }
     }
 }
