@@ -25,27 +25,14 @@ To deploy this .net Core app you must:
 2. Choose OpenAPI
 3. Specify your domain (where your web app will be deployed) in settings.
 
-4. In VkInstruments.CoreWebApp.Auth.AuthorizationVk paste your domain into redirect_uri:
+4. In VkInstruments.CoreWebApp.Auth.AuthorizationVk paste your domain into DOMAIN and your AppId int APP_ID:
 
 ```c#
-        public Uri CreateAuthorizeUrl(ulong clientId, ulong scope, Display display, string state)
-        {
-        ...some code
-            builder.Append($"redirect_uri={Your domain}/Authorization/Complete&");
-        ...some code
-        }
-```
-
-5. In VkInstruments.CoreWebApp.Controllers.AuthorizationController paste your appId from VK:
-
-
-```c#
-        public ActionResult Start()
-        {
-            ...some code
-            vkAuth.SetAuthParams(_vk.GetParams({Your appId}));
-            ...some code
-        }
+    public static class AppProperties
+    {
+        public const int APP_ID = YourAppId;
+        public const string DOMAIN = "YourDomain";
+    }
 ```
 
 ## Collaboration
