@@ -5,13 +5,16 @@ Gets VK profiles links of people who liked your post.
 ([Release](https://github.com/Onikiro/VkInstruments/releases/tag/2.0))
 
 Presentation:
-![presentation gif](https://media.giphy.com/media/2kVnesYPphyGOOsXRF/giphy.gif)
+![presentation gif](https://media.giphy.com/media/fHifO6idiW6pCo0ow8/giphy.gif)
 
 
 ### Profile links filter by input Ids 
 
 Gets VK profile links, filters them and returns filtered list. 
 ([Release](https://github.com/Onikiro/VkInstruments/releases/tag/2.0))
+
+Presentation:
+![presentation gif](https://media.giphy.com/media/SiM5br9dhGVkzbo06D/giphy.gif)
 
 
 ## Installing
