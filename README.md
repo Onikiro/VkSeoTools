@@ -25,7 +25,7 @@ To deploy this .net Core app you must:
 2. Choose OpenAPI
 3. Specify your domain (where your web app will be deployed) in settings.
 
-4. In VkInstruments.CoreWebApp.Auth.AuthorizationVk paste your domain into DOMAIN and your AppId int APP_ID:
+4. In VkInstruments.CoreWebApp.AppProperties paste your domain into DOMAIN and your AppId int APP_ID:
 
 ```c#
     public static class AppProperties
