@@ -35,7 +35,7 @@ To deploy this .net Core app you must:
 
 ## Collaboration
 
-I haven't realized some features, so you can take any task from Projects menu and create a pull request with your improvements. You are welcome. :)
+I haven't implemented some features, so you can take any task from Projects menu and create a pull request with your improvements. You are welcome. :)
 
 
 ## Used libraries
