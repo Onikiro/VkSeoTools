@@ -35,10 +35,12 @@ namespace VkInstruments.WebApp
                     options.SlidingExpiration = true;
                 });
 
+            services.AddHttpsRedirection(c => { c.HttpsPort = 44335; });
+
             services.AddSingleton<IVkSystem, VkSystem>();
             services.AddTransient<IVkService, VkService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);           
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -52,9 +54,11 @@ namespace VkInstruments.WebApp
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseHttpsRedirection();
 
             app.UseMvc(routes =>
             {

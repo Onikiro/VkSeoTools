@@ -11,25 +11,25 @@
 <body>
     <header class="blog-masthead">
         <nav class="navbar">
-            <div class="container">               
+            <div class="container">
                 <form asp-area="" asp-controller="Authorization" asp-action="SignOut" method="post" id="logoutForm">
                     <div class="left-nav">
                         <a class="nav-link" href="javascript:$('#logoutForm').submit()">Выйти</a>
                         <a class="nav-link" asp-controller="Home" asp-action="Parser">Парсер лайков</a>
                         <a class="nav-link" asp-controller="Home" asp-action="Filter">Фильтр пользователей</a>
                     </div>
-                </form>               
+                </form>
                 <div class="right-nav">
                     <a class="right-title">VK Instruments</a>
                 </div>
             </div>
-        </nav>       
+        </nav>
     </header>
     <div class="container body-content">
         @RenderBody()
         <div style="padding-top: 100px" />
         <footer class="modal-footer">
-            <p style="font-size: smaller">&copy; @DateTime.Now.Year - VkInstruments</p>
+            <a style="font-size: smaller" href="https://github.com/Onikiro/VkInstruments">Github</a>
         </footer>
     </div>
 </body>

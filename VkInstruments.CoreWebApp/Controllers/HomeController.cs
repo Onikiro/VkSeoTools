@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using VkInstruments.Core;
 using VkInstruments.WebApp.Model;
 using VkInstruments.WebApp.Utils;
@@ -24,6 +24,7 @@ namespace VkInstruments.WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ParserResult(string postLink)
         {
             var model = await _vkService.ParseLikesFromPost(postLink);
@@ -31,6 +32,7 @@ namespace VkInstruments.WebApp.Controllers
             return View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> Filter(string userIds)
         {
             var model = new UserFilterViewModel
@@ -43,6 +45,7 @@ namespace VkInstruments.WebApp.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> FilterResult(string userIds, UserSearchParams searchParams)
         {
             var model = await _vkService.FilterIds(userIds, searchParams);
@@ -50,6 +53,7 @@ namespace VkInstruments.WebApp.Controllers
             return View(model);
         }
 
+        [Authorize]
         public async Task<IActionResult> CityPartial(int countryId)
         {
             var model = (await _vkService.GetCities(countryId)).ToSelectList();
