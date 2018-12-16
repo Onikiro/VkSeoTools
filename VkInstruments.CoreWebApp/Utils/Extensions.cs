@@ -2,7 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace VkInstruments.CoreWebApp.Utils
+namespace VkInstruments.WebApp.Utils
 {
     public static class Extensions
     {

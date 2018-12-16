@@ -3,9 +3,9 @@ using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using VkInstruments.Core.Enums;
-using VkInstruments.CoreWebApp.Utils;
+using VkInstruments.WebApp.Utils;
 
-namespace VkInstruments.CoreWebApp.Model
+namespace VkInstruments.WebApp.Model
 {
     public class UserFilterViewModel
     {

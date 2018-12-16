@@ -4,7 +4,7 @@ using VkNet.Abstractions;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
 
-namespace VkInstruments.CoreWebApp.Auth
+namespace VkInstruments.WebApp.Auth
 {
     public class AuthorizationVk
     {

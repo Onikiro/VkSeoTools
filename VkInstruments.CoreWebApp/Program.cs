@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace VkInstruments.CoreWebApp
+namespace VkInstruments.WebApp
 {
     public class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace VkInstruments.CoreWebApp
+﻿namespace VkInstruments.WebApp
 {
     public static class AppProperties
     {

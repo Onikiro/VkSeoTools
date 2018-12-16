@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VkInstruments.Core;
 using VkInstruments.Core.VkSystem;
-using VkInstruments.CoreWebApp.Auth;
+using VkInstruments.WebApp.Auth;
 using VkNet.Enums.SafetyEnums;
 
-namespace VkInstruments.CoreWebApp.Controllers
+namespace VkInstruments.WebApp.Controllers
 {
     [AllowAnonymous]
     public class AuthorizationController : Controller

@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using VkInstruments.Core;
 using VkInstruments.Core.VkSystem;
 
-namespace VkInstruments.CoreWebApp
+namespace VkInstruments.WebApp
 {
     public class Startup
     {

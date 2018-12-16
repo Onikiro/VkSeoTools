@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using VkInstruments.Core;
-using VkInstruments.CoreWebApp.Model;
-using VkInstruments.CoreWebApp.Utils;
+using VkInstruments.WebApp.Model;
+using VkInstruments.WebApp.Utils;
 using VkNet.Model.RequestParams;
 
-namespace VkInstruments.CoreWebApp.Controllers
+namespace VkInstruments.WebApp.Controllers
 {
     [Authorize]
     public class HomeController : Controller
