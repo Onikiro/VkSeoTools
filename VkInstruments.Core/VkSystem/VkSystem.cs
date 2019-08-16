@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging.Abstractions;
 using VkNet;
 using VkNet.Enums.Filters;
 using VkNet.Model;

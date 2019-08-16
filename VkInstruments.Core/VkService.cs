@@ -20,6 +20,8 @@ namespace VkInstruments.Core
 
         public async Task<List<long>> ParseLikesFromPost(string input)
         {
+            var parser = new Parser();
+
             var postLinks = input.Split('\n');
             var likeIds = new List<long>();
 
@@ -27,7 +29,7 @@ namespace VkInstruments.Core
             {
                 foreach (var link in postLinks)
                 {
-                    likeIds.AddRange(await Parser.GetLikes(_vk.Vk, link));
+                    likeIds.AddRange(await parser.GetLikes(_vk.Vk.Likes, link));
                 }
             }
 

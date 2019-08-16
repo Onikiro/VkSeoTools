@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using VkNet.Abstractions;
+using VkNet.Abstractions.Core;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
 
