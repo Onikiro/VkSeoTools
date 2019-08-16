@@ -8,9 +8,9 @@ using VkNet.Model.RequestParams;
 
 namespace VkInstruments.Core
 {
-    internal static class UserFilter
+    public static class UserFilter
     {
-        internal static IEnumerable<User> ApplyFilter(IEnumerable<User> users, UserSearchParams searchParams)
+        public static IEnumerable<User> ApplyFilter(IEnumerable<User> users, UserSearchParams searchParams)
         {
             var result = new List<User>();
 
@@ -45,7 +45,7 @@ namespace VkInstruments.Core
             return result;
         }
 
-        internal static ProfileFields GetProfileFields(UserSearchParams searchParams)
+        public static ProfileFields GetProfileFields(UserSearchParams searchParams)
         {
             var fields = new ProfileFields();
 
