@@ -11,15 +11,15 @@ namespace VkInstruments.ConsoleApp
             var vkSystem = new VkSystem();
             await vkSystem.AuthAsync();
 
-            Console.Write("\nВведите ссылку на пост: ");
+            Console.Write("\nEnter post link: ");
             var postLink = Console.ReadLine();
 
             var vkService = new VkService(vkSystem);
-            var likes = await vkService.ParseLikesFromPost(postLink);
+            var profileIds = await vkService.ParseLikedUserIdsFromPost(postLink);
 
-            foreach (var likeAdress in likes)
+            foreach (var address in profileIds)
             {
-                Console.WriteLine($"vk.com/id{likeAdress}");
+                Console.WriteLine($"vk.com/id{address}");
             }
         }
     }

@@ -27,7 +27,7 @@ namespace VkInstruments.WebApp.Controllers
         [Authorize]
         public async Task<IActionResult> ParserResult(string postLink)
         {
-            var model = await _vkService.ParseLikesFromPost(postLink);
+            var model = await _vkService.ParseLikedUserIdsFromPost(postLink);
 
             return View(model);
         }

@@ -18,7 +18,7 @@ namespace VkInstruments.Core
             _vk = vk;
         }
 
-        public async Task<List<long>> ParseLikesFromPost(string input)
+        public async Task<List<long>> ParseLikedUserIdsFromPost(string input)
         {
             var parser = new Parser();
 
@@ -63,7 +63,7 @@ namespace VkInstruments.Core
 
         public async Task<List<User>> FilterIdsByPostLinkAsync(string input, UserSearchParams @params)
         {
-            var ids = await ParseLikesFromPost(input);
+            var ids = await ParseLikedUserIdsFromPost(input);
             var result = await _vk.Vk.Users.GetAsync(ids, UserFilter.GetProfileFields(@params));
             return UserFilter.ApplyFilter(result, @params).ToList();
         }

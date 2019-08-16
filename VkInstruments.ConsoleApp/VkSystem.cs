@@ -12,9 +12,9 @@ namespace VkInstruments.ConsoleApp
 
         private void SetCredentials()
         {
-            Console.Write("Введите свой номер телефона или email: ");
+            Console.Write("Your phone number or email: ");
             _login = Console.ReadLine();
-            Console.Write("\nВведите свой пароль: ");
+            Console.Write("\nYour password: ");
             _password = Console.ReadLine();
         }
 
@@ -32,7 +32,7 @@ namespace VkInstruments.ConsoleApp
                     Settings = SettingFilters,
                     TwoFactorAuthorization = () =>
                     {
-                        Console.Write("\nВведите код:");
+                        Console.Write("\nYour 2FA code:");
                         return Console.ReadLine();
                     }
                 });
@@ -53,7 +53,7 @@ namespace VkInstruments.ConsoleApp
             if (isLoggedIn)
             {
                 Console.Clear();
-                Console.Write("Вход выполнен успешно!");
+                Console.Write("Success!");
             }
         }
     }
