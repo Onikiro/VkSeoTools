@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using VkNet;
 using VkNet.Abstractions;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model.RequestParams;
 
 namespace VkInstruments.Core
 {
-    public static class Parser
+    public class Parser
     {
-        private static async Task<IEnumerable<long>> GetLikesSegment(IVkApiCategories vk, Tuple<long, long> ids, uint index = 0)
+        private async Task<IEnumerable<long>> GetLikesSegment(ILikesCategoryAsync vkLikesCategory, Tuple<long, long> ids, uint index = 0)
         {
-            return await vk.Likes.GetListAsync(new LikesGetListParams
+            var (ownerId, itemId) = ids;
+            return await vkLikesCategory.GetListAsync(new LikesGetListParams
             {
                 Type = LikeObjectType.Post,
                 Filter = LikesFilter.Likes,
-                OwnerId = ids.Item1,
-                ItemId = ids.Item2,
+                OwnerId = ownerId,
+                ItemId = itemId,
                 Extended = false,
                 Offset = index,
                 Count = 1000
@@ -29,7 +29,7 @@ namespace VkInstruments.Core
         /// Returns post ids tuple (Item1 - ownerId, Item2 - ItemId)
         /// </summary>
         /// <param name="uri">post link</param>
-        public static Tuple<long, long> GetPostIds(string uri)
+        public Tuple<long, long> GetPostIds(string uri)
         {
             const string idsPattern = "([-\\d]+)_([\\d]+)";
 
@@ -47,19 +47,19 @@ namespace VkInstruments.Core
                 ownerId -= itemId;
             }
 
-            return new Tuple<long, long>(ownerId, itemId);
+            return Tuple.Create(ownerId, itemId);
         }
 
-        public static async Task<List<long>> GetLikes(VkApi vk, string uri)
+        public async Task<List<long>> GetLikes(ILikesCategoryAsync vkLikesCategory, string uri)
         {
             var linkIds = GetPostIds(uri);
-            var idsList = new List<long>(100);
+            var idsList = new List<long>();
             var isEnded = false;
             uint offset = 0;
             while (!isEnded)
             {
                 isEnded = true;
-                var likeSegment = await GetLikesSegment(vk, linkIds, offset);
+                var likeSegment = await GetLikesSegment(vkLikesCategory, linkIds, offset);
                 idsList.AddRange(likeSegment);
                 if (idsList.Count > 0 && idsList.Count % 1000 == 0)
                 {
