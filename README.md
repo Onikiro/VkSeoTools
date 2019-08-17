@@ -66,4 +66,4 @@ I haven't implemented some features, so you can take any task from Projects menu
 
 ### Supported by
 
-[<img src="VkInstruments.CoreWebApp/wwwroot/jetbrains.svg">](https://www.jetbrains.com/?from=VkInstruments)
+[<img src="VkInstruments.Web/wwwroot/jetbrains.svg">](https://www.jetbrains.com/?from=VkInstruments)
