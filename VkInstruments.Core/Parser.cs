@@ -10,7 +10,7 @@ namespace VkInstruments.Core
 {
     public class Parser
     {
-        private async Task<IEnumerable<long>> GetLikesSegment(ILikesCategoryAsync vkLikesCategory, Tuple<long, long> ids, uint index = 0)
+        private async Task<IEnumerable<long>> GetLikesSegment(ILikesCategoryAsync vkLikesCategory, (long, long) ids, uint index = 0)
         {
             var (ownerId, itemId) = ids;
             return await vkLikesCategory.GetListAsync(new LikesGetListParams
@@ -29,7 +29,7 @@ namespace VkInstruments.Core
         /// Returns post ids tuple (Item1 - ownerId, Item2 - ItemId)
         /// </summary>
         /// <param name="uri">post link</param>
-        public Tuple<long, long> GetPostIds(string uri)
+        public (long, long) GetPostIds(string uri)
         {
             const string idsPattern = "([-\\d]+)_([\\d]+)";
 
@@ -47,7 +47,7 @@ namespace VkInstruments.Core
                 ownerId -= itemId;
             }
 
-            return Tuple.Create(ownerId, itemId);
+            return (ownerId, itemId);
         }
 
         public async Task<List<long>> GetLikes(ILikesCategoryAsync vkLikesCategory, string uri)

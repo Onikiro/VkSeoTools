@@ -1,0 +1,12 @@
+﻿@using VkNet.Model
+
+@model IEnumerable<User>
+
+@{
+    ViewBag.Title = "FilterResult";
+}
+
+<h3 class="text-center">Результат фильтрации пользователей: </h3>
+
+<textarea name="filteredUserIds" class="form-control" rows="5" style="margin-top: 10px; max-width: 100%">@string.Join("\n", Model.Select(x => $"vk.com/id{x.Id}"))</textarea>
+
