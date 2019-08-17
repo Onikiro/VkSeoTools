@@ -10,7 +10,7 @@ namespace VkInstruments.ConsoleApp
     {
         private static async Task Main()
         {
-            var vkService = new VkService(new VkApi(NullLogger<VkApi>.Instance));
+            var vkService = new VkService(new VkApi(NullLogger<VkApi>.Instance), "yourtoken");
 
             Console.Write("\nEnter post link: ");
             var postLink = Console.ReadLine();
