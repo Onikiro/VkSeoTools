@@ -22,18 +22,16 @@ Presentation:
 ```c#
         private static async Task Main()
         {
-            var vkSystem = new VkSystem();
-            await vkSystem.AuthAsync();
+            var vkService = new VkService(new VkApi(NullLogger<VkApi>.Instance), "yourtoken");
 
-            Console.Write("\nВведите ссылку на пост: ");
+            Console.Write("\nEnter post link: ");
             var postLink = Console.ReadLine();
 
-            var vkService = new VkService(vkSystem);
-            var likes = await vkService.ParseLikesFromPost(postLink);
+            var profileIds = await vkService.ParseLikedUserIdsFromPost(postLink);
 
-            foreach (var likeAdress in likes)
+            foreach (var address in profileIds)
             {
-                Console.WriteLine($"vk.com/id{likeAdress}");
+                Console.WriteLine($"vk.com/id{address}");
             }
         }
 ```
@@ -42,18 +40,8 @@ Presentation:
 ## Installing
 To deploy this .net Core app you must: 
 1. Сreate a VK app 
-2. Choose OpenAPI
-3. Specify your domain (where your web app will be deployed) in settings.
-
-4. In VkInstruments.CoreWebApp.AppProperties paste your domain into DOMAIN and your AppId int APP_ID:
-
-```c#
-    public static class AppProperties
-    {
-        public const int APP_ID = YourAppId;
-        public const string DOMAIN = "YourDomain";
-    }
-```
+2. Copy ServiceToken from your app
+3. Paste VkInstruments.Web -> appsetings.json your ServiceToken
 
 ## Collaboration
 
