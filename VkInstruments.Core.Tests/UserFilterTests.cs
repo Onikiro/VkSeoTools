@@ -1,16 +1,15 @@
 ﻿using FluentAssertions;
-using NUnit.Framework;
 using System.Collections.Generic;
 using VkNet.Enums;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
+using Xunit;
 
 namespace VkInstruments.Core.Tests
 {
-    [TestFixture]
     public class UserFilterTests
     {
-        [Test]
+        [Fact]
         public void ApplyFilter()
         {
             var users = new List<User>

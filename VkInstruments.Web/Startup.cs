@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging.Abstractions;
 using VkInstruments.Core;
 using VkNet;
@@ -21,16 +21,13 @@ namespace VkInstruments.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpsRedirection(c => { c.HttpsPort = 44335; });
-
-            var vkApi = new VkApi(NullLogger<VkApi>.Instance);
+            services.AddControllersWithViews();
+            using var vkApi = new VkApi(NullLogger<VkApi>.Instance);
             services.AddTransient<IVkApi, VkApi>(args => vkApi);
             services.AddTransient<IVkService, VkService>(args => new VkService(vkApi, Configuration["VkServiceToken"]));
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -42,14 +39,15 @@ namespace VkInstruments.Web
                 app.UseHsts();
             }
 
-            app.UseStaticFiles();
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Parser}/{id?}");
+                    pattern: "{controller=Home}/{action=Parser}/{id?}");
             });
         }
     }

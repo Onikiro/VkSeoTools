@@ -1,16 +1,14 @@
 ﻿using FluentAssertions;
-using NUnit.Framework;
-using System;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace VkInstruments.Core.Tests
 {
-    [TestFixture]
     public class ParserTests
     {
         private readonly Parser _parser = new Parser();
 
-        [Test]
+        [Fact]
         public void GetPostIds()
         {
             const string userPost = "https://vk.com/wall1?offset=80&own=1&w=wall1_247797";
@@ -32,7 +30,7 @@ namespace VkInstruments.Core.Tests
             communityPostItemId.Should().NotBe(-22822305);
         }
 
-        [Test]
+        [Fact]
         public async Task GetLikes()
         {
             var mock = new VkLikesCategoryMock();

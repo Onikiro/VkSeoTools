@@ -1,14 +1,13 @@
 using FluentAssertions;
-using NUnit.Framework;
 using VkInstruments.Core.Enums;
 using VkInstruments.Core.Utils;
+using Xunit;
 
 namespace VkInstruments.Core.Tests
 {
-    [TestFixture]
     public class ExtensionTests
     {
-        [Test]
+        [Fact]
         public void GetDescription()
         {
             var actualDescription = Status.TheActiveSearch.GetDescription();

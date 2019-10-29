@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using VkInstruments.Core;
 using VkInstruments.Web.Utils;
 using VkInstruments.Web.ViewModels;
