@@ -14,7 +14,5 @@ namespace VkInstruments.Core
         Task<Dictionary<long, string>> GetCountries(bool? needAll = null);
 
         Task<Dictionary<long, string>> GetCities(int countryId);
-
-        Task<List<User>> FilterIdsByPostLinkAsync(string input, UserSearchParams @params);
     }
 }

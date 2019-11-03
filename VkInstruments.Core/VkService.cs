@@ -61,12 +61,5 @@ namespace VkInstruments.Core
 
             return result.Where(x => x.Id.HasValue).ToDictionary(x => x.Id.Value, x => x.Title);
         }
-
-        public async Task<List<User>> FilterIdsByPostLinkAsync(string input, UserSearchParams @params)
-        {
-            var ids = await ParseLikedUserIdsFromPost(input);
-            var result = await _vk.Users.GetAsync(ids, UserFilter.GetProfileFields(@params));
-            return UserFilter.ApplyFilter(result, @params).ToList();
-        }
     }
 }
