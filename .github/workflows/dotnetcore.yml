@@ -1,0 +1,24 @@
+  
+name: Build
+
+on:
+  push:
+    branches: 
+      - master
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build_and_deploy:
+    name: Build an ASP.NET Core app
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.0.100
+    - name: Build Web App
+      run: dotnet build VkInstruments.Web/VkInstruments.Web.csproj -c Release -o ./app
