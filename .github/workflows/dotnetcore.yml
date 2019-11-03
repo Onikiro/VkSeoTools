@@ -22,3 +22,5 @@ jobs:
         dotnet-version: 3.0.100
     - name: Build Web App
       run: dotnet build VkInstruments.Web/VkInstruments.Web.csproj -c Release -o ./app
+    - name: Build Tests
+      run: dotnet test VkInstruments.Core.Tests/VkInstruments.Core.Tests.csproj
