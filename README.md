@@ -1,4 +1,7 @@
 # VK SEO instruments
+
+![Build](https://github.com/Onikiro/VkInstruments/workflows/Build/badge.svg)
+
 ###  VK Likes parser from wall-post 
 
 Gets VK profiles links of people who liked your post. 
